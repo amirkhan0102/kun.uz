@@ -1,0 +1,34 @@
+### CREATE SECTION
+POST http://localhost:8080/api/section
+Content-Type: application/json
+
+{
+  "orderNumber": 1,
+  "nameUz": "Yangiliklar",
+  "nameRu": "Новости",
+  "nameEn": "News",
+  "key": "news",
+  "imageId": "img123"
+}
+
+### UPDATE SECTION
+PUT http://localhost:8080/api/section/1
+Content-Type: application/json
+
+{
+  "orderNumber": 2,
+  "nameUz": "Texnologiya",
+  "nameRu": "Технология",
+  "nameEn": "Technology",
+  "key": "tech",
+  "imageId": "img456"
+}
+
+### GET SECTION LIST
+GET http://localhost:8080/api/section
+
+### GET SECTION BY LANG
+GET http://localhost:8080/api/section/lang/ru
+
+### DELETE SECTION
+DELETE http://localhost:8080/api/section/1

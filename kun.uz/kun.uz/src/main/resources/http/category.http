@@ -1,0 +1,35 @@
+### CREATE CATEGORY
+POST http://localhost:8080/api/category
+Content-Type: application/json
+
+{
+  "orderNumber": 1,
+  "nameUz": "Sport",
+  "nameRu": "Спорт",
+  "nameEn": "Sport",
+  "key": "sport"
+}
+
+### UPDATE CATEGORY
+PUT http://localhost:8080/api/category/1
+Content-Type: application/json
+
+{
+  "orderNumber": 2,
+  "nameUz": "Dunyo",
+  "nameRu": "Мир",
+  "nameEn": "World",
+  "key": "world"
+}
+
+### GET CATEGORY LIST
+GET http://localhost:8080/api/category
+
+### GET CATEGORY BY LANG
+GET http://localhost:8080/api/category/lang/en
+
+### DELETE CATEGORY
+DELETE http://localhost:8080/api/category/1
+
+
+

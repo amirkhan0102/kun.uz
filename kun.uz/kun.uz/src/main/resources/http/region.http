@@ -1,0 +1,33 @@
+### CREATE REGION
+POST http://localhost:8080/api/region
+Content-Type: application/json
+
+{
+  "orderNumber": 1,
+  "nameUz": "Toshkent",
+  "nameRu": "Ташкент",
+  "nameEn": "Tashkent",
+  "key": "tashkent"
+}
+
+### UPDATE REGION
+PUT http://localhost:8080/api/region/1
+Content-Type: application/json
+
+{
+  "orderNumber": 2,
+  "nameUz": "Samarqand",
+  "nameRu": "Самарканд",
+  "nameEn": "Samarkand",
+  "key": "samarkand"
+}
+
+### GET REGION LIST (ADMIN)
+GET http://localhost:8080/api/region
+
+### GET BY LANG
+GET http://localhost:8080/api/region/lang/uz
+
+### DELETE REGION
+DELETE http://localhost:8080/api/region/1
+

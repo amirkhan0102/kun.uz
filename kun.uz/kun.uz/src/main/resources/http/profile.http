@@ -1,0 +1,32 @@
+### CREATE PROFILE
+POST http://localhost:8080/api/profile
+Content-Type: application/json
+
+{
+  "name": "Ali",
+  "surname": "Valiyev",
+  "username": "ali123",
+  "password": "12345",
+  "status": "ACTIVE",
+  "roleList": ["ROLE_MODERATOR", "ROLE_PUBLISHER"]
+}
+
+### GET PROFILE BY ID
+GET http://localhost:8080/api/profile/1
+
+### UPDATE PROFILE
+PUT http://localhost:8080/api/profile/1
+Content-Type: application/json
+
+{
+  "name": "Ali",
+  "surname": "Valiyev Updated",
+  "status": "ACTIVE",
+  "roleList": ["ROLE_PUBLISHER"]
+}
+
+### GET PROFILE LIST
+GET http://localhost:8080/api/profile
+
+### DELETE PROFILE
+DELETE http://localhost:8080/api/profile/1
