@@ -1,0 +1,192 @@
+### CREATE REGION
+POST http://localhost:8080/api/region
+Content-Type: application/json
+
+{
+  "orderNumber": 1,
+  "nameUz": "Toshkent",
+  "nameRu": "Ташкент",
+  "nameEn": "Tashkent",
+  "key": "tashkent"
+}
+
+### UPDATE REGION
+PUT http://localhost:8080/api/region/1
+Content-Type: application/json
+
+{
+  "orderNumber": 2,
+  "nameUz": "Samarqand",
+  "nameRu": "Самарканд",
+  "nameEn": "Samarkand",
+  "key": "samarkand"
+}
+
+### GET REGION LIST (ADMIN)
+GET http://localhost:8080/api/region
+
+### GET BY LANG
+GET http://localhost:8080/api/region/lang/uz
+
+### DELETE REGION
+DELETE http://localhost:8080/api/region/1
+
+
+
+
+
+### CREATE CATEGORY
+POST http://localhost:8080/api/category
+Content-Type: application/json
+
+{
+  "orderNumber": 1,
+  "nameUz": "Sport",
+  "nameRu": "Спорт",
+  "nameEn": "Sport",
+  "key": "sport"
+}
+
+### UPDATE CATEGORY
+PUT http://localhost:8080/api/category/1
+Content-Type: application/json
+
+{
+  "orderNumber": 2,
+  "nameUz": "Dunyo",
+  "nameRu": "Мир",
+  "nameEn": "World",
+  "key": "world"
+}
+
+### GET CATEGORY LIST
+GET http://localhost:8080/api/category
+
+### GET CATEGORY BY LANG
+GET http://localhost:8080/api/category/lang/en
+
+### DELETE CATEGORY
+DELETE http://localhost:8080/api/category/1
+
+
+
+
+
+
+### CREATE CATEGORY
+POST http://localhost:8080/api/category
+Content-Type: application/json
+
+{
+  "orderNumber": 1,
+  "nameUz": "Sport",
+  "nameRu": "Спорт",
+  "nameEn": "Sport",
+  "key": "sport"
+}
+
+### UPDATE CATEGORY
+PUT http://localhost:8080/api/category/1
+Content-Type: application/json
+
+{
+  "orderNumber": 2,
+  "nameUz": "Dunyo",
+  "nameRu": "Мир",
+  "nameEn": "World",
+  "key": "world"
+}
+
+### GET CATEGORY LIST
+GET http://localhost:8080/api/category
+
+### GET CATEGORY BY LANG
+GET http://localhost:8080/api/category/lang/en
+
+### DELETE CATEGORY
+DELETE http://localhost:8080/api/category/1
+
+
+
+
+
+### CREATE SECTION
+POST http://localhost:8080/api/section
+Content-Type: application/json
+
+{
+  "orderNumber": 1,
+  "nameUz": "Yangiliklar",
+  "nameRu": "Новости",
+  "nameEn": "News",
+  "key": "news",
+  "imageId": "img123"
+}
+
+### UPDATE SECTION
+PUT http://localhost:8080/api/section/1
+Content-Type: application/json
+
+{
+  "orderNumber": 2,
+  "nameUz": "Texnologiya",
+  "nameRu": "Технология",
+  "nameEn": "Technology",
+  "key": "tech",
+  "imageId": "img456"
+}
+
+### GET SECTION LIST
+GET http://localhost:8080/api/section
+
+### GET SECTION BY LANG
+GET http://localhost:8080/api/section/lang/ru
+
+### DELETE SECTION
+DELETE http://localhost:8080/api/section/1
+
+
+
+
+
+### CREATE PROFILE
+POST http://localhost:8080/api/profile
+Content-Type: application/json
+
+{
+  "name": "Ali",
+  "surname": "Valiyev",
+  "username": "ali123",
+  "password": "12345",
+  "status": "ACTIVE",
+  "roleList": ["ROLE_MODERATOR", "ROLE_PUBLISHER"]
+}
+
+### GET PROFILE BY ID
+GET http://localhost:8080/api/profile/1
+
+### UPDATE PROFILE
+PUT http://localhost:8080/api/profile/1
+Content-Type: application/json
+
+{
+  "name": "Ali",
+  "surname": "Valiyev Updated",
+  "status": "ACTIVE",
+  "roleList": ["ROLE_PUBLISHER"]
+}
+
+### GET PROFILE LIST
+GET http://localhost:8080/api/profile
+
+### DELETE PROFILE
+DELETE http://localhost:8080/api/profile/1
+
+
+
+
+
+
+
+
+

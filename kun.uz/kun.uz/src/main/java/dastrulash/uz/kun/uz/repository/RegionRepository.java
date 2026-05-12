@@ -8,7 +8,7 @@ import java.util.List;
 public interface RegionRepository  extends JpaRepository<RegionEntity, Long> {
 
 
-    List<RegionEntity> findAllByVisibleTrueOrderByCreateDateDesc();
+    List<RegionEntity> findAllByVisibleTrueOrderByCreatedDateDesc();
     Boolean existsByKey(String key);
 
 
