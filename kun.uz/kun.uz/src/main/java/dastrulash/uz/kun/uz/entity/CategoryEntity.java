@@ -2,6 +2,8 @@ package dastrulash.uz.kun.uz.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -29,11 +31,13 @@ public class CategoryEntity {
     @Column(name = "name_en")
     private String nameEn;
 
-    @Column(unique = true)
+    @Column(name = "category_key")
     private String key;
 
+    @Column(name = "visible")
     private Boolean visible = true;
 
     @Column(name = "created_date")
+    @CreationTimestamp
     private LocalDateTime createdDate = LocalDateTime.now();
 }

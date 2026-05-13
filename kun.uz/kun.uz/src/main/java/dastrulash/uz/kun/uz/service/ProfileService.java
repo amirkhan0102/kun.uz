@@ -88,7 +88,7 @@ public class ProfileService {
         roleList.forEach(role -> {
             ProfileRoleEntity roleEntity = new ProfileRoleEntity();
             roleEntity.setProfile(entity);
-            roleEntity.setRole(role);
+            roleEntity.setRoles(role);
             profileRoleRepository.save(roleEntity);
         });
     }
@@ -112,7 +112,7 @@ public class ProfileService {
         List<ProfileRoleEnum> roles = profileRoleRepository
                 .findByProfileId(entity.getId())
                 .stream()
-                .map(ProfileRoleEntity::getRole)
+                .map(ProfileRoleEntity::getRoles)
                 .collect(Collectors.toList());
         dto.setRoleList(roles);
 
