@@ -1,16 +1,37 @@
 package dastrulash.uz.kun.uz.dto;
 
-import lombok.*;
+
+
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class CategoryDTO {
 
-    private Long id;
+    private Integer id;
+
+    @NotNull(message = "OrderNumber required")
+    @Min(value = 1, message = "OrderNumber have to higher than 0")
     private Integer orderNumber;
-    private String key;
-    private String name; // tilga qarab nameUz/nameRu/nameEn
+
+    @NotBlank(message = "NameUz required")
+    private String nameUz;
+
+    @NotBlank(message = "NameRu required")
+    private String nameRu;
+
+    @NotBlank(message = "NameEn required")
+    private String nameEn;
+
+    @NotBlank(message = "CategoryKey required")
+    private String categoryKey;
+
+    private LocalDateTime createdDate;
+    private String name;
 }

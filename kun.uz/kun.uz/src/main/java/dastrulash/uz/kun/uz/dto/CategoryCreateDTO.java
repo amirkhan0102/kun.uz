@@ -1,4 +1,4 @@
-package uz.topnews.dto.category;
+package dastrulash.uz.kun.uz.dto;
 
 
 import lombok.*;
@@ -24,6 +24,9 @@ public class CategoryCreateDTO {
 
     @NotBlank
     private String nameEn;
+
+    @NotBlank(message = "CategoryKey required")
+    private String categoryKey;
 
     @NotBlank
     private String key;
