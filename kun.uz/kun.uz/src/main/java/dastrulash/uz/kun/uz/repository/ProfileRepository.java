@@ -1,15 +1,22 @@
 package dastrulash.uz.kun.uz.repository;
 
+
 import dastrulash.uz.kun.uz.entity.ProfileEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.Optional;
 
-@Repository
-public interface ProfileRepository extends JpaRepository<ProfileEntity, Long> {
+public interface ProfileRepository extends CrudRepository<ProfileEntity, Integer>, PagingAndSortingRepository<ProfileEntity, Integer> {
 
-    Optional<ProfileEntity> findByUsername(String username);
+    // where username = ? and visible = true
+    Optional<ProfileEntity> findByUsernameAndVisibleIsTrue(String username);
 
-    Boolean existsByUsername(String username);
+    Optional<ProfileEntity> findByIdAndVisibleIsTrue(Integer id);
+
+    @Query("From ProfileEntity p inner join fetch p.roleList where p.visible = true")
+    Page<ProfileEntity> findAllWithRoles(Pageable pageable);
 }

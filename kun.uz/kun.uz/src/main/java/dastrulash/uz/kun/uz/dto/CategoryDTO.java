@@ -1,7 +1,6 @@
 package dastrulash.uz.kun.uz.dto;
 
 
-
 import lombok.Getter;
 import lombok.Setter;
 

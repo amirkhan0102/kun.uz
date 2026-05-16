@@ -1,7 +1,8 @@
 package dastrulash.uz.kun.uz.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -10,14 +11,10 @@ import java.time.LocalDateTime;
 @Table(name = "section")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class SectionEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "order_number")
     private Integer orderNumber;
@@ -32,15 +29,13 @@ public class SectionEntity {
     private String nameEn;
 
     @Column(name = "section_key")
-    private String key;
+    private String sectionKey;
 
     @Column(name = "visible")
     private Boolean visible = true;
 
     @Column(name = "created_date")
     @CreationTimestamp
-    private LocalDateTime createdDate = LocalDateTime.now();
+    private LocalDateTime createdDate;
 
-    @Column(name = "image_id")
-    private String imageId; // optional
 }

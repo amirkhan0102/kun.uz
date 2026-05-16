@@ -1,5 +1,6 @@
 package dastrulash.uz.kun.uz.entity;
 
+
 import dastrulash.uz.kun.uz.enums.ProfileRoleEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -16,7 +17,7 @@ public class ProfileRoleEntity {
     private Integer id;
 
 
-    @Column(name = "profile_id")
+    @Column(name = "profile_id" , insertable = false, updatable = false)
     private Integer profileId;
 
     @ManyToOne(fetch = FetchType.LAZY)

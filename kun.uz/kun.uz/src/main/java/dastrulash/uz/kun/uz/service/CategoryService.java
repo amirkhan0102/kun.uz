@@ -31,7 +31,7 @@ public class CategoryService {
         entity.setNameUz(dto.getNameUz());
         entity.setNameRu(dto.getNameRu());
         entity.setNameEn(dto.getNameEn());
-        entity.setKey(dto.getCategoryKey());
+        entity.setCategoryKey(dto.getCategoryKey());
         entity.setVisible(Boolean.TRUE);
         entity.setCreatedDate(LocalDateTime.now());
         repository.save(entity);
@@ -56,7 +56,7 @@ public class CategoryService {
         entity.setNameUz(newDto.getNameUz());
         entity.setNameRu(newDto.getNameRu());
         entity.setNameEn(newDto.getNameEn());
-        entity.setKey(newDto.getCategoryKey());
+        entity.setCategoryKey(newDto.getCategoryKey());
         repository.save(entity);
 
         newDto.setId(Math.toIntExact(entity.getId()));
@@ -88,7 +88,7 @@ public class CategoryService {
         dto.setNameUz(entity.getNameUz());
         dto.setNameRu(entity.getNameRu());
         dto.setNameEn(entity.getNameEn());
-        dto.setCategoryKey(entity.getKey());
+        dto.setCategoryKey(entity.getCategoryKey());
         dto.setCreatedDate(entity.getCreatedDate());
         return dto;
     }
@@ -96,7 +96,7 @@ public class CategoryService {
     private CategoryDTO toLangResponseDto(LanguageEnum lang, CategoryEntity entity) {
         CategoryDTO dto = new CategoryDTO();
         dto.setId(Math.toIntExact(entity.getId()));
-        dto.setCategoryKey(entity.getKey());
+        dto.setCategoryKey(entity.getCategoryKey());
         dto.setOrderNumber(entity.getOrderNumber());
         switch (lang) {
             case UZ:

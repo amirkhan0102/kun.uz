@@ -1,32 +1,63 @@
-### CREATE PROFILE
-POST http://localhost:8080/api/profile
+### Create
+POST localhost:8080/api/v1/profile
 Content-Type: application/json
 
 {
-  "name": "Ali",
-  "surname": "Valiyev",
-  "username": "ali123",
+  "name": "Eshmat3",
+  "surname": "Eshmatov3",
+  "username": "eshmat3@gmail.com",
   "password": "12345",
-  "status": "ACTIVE",
-  "roleList": ["ROLE_MODERATOR", "ROLE_PUBLISHER"]
+  "roleList": [
+    "ROLE_USER",
+    "ROLE_ADMIN"
+  ]
 }
 
-### GET PROFILE BY ID
-GET http://localhost:8080/api/profile/1
 
-### UPDATE PROFILE
-PUT http://localhost:8080/api/profile/1
+### Update
+PUT localhost:8080/api/v1/profile/3
 Content-Type: application/json
 
 {
-  "name": "Ali",
-  "surname": "Valiyev Updated",
-  "status": "ACTIVE",
-  "roleList": ["ROLE_PUBLISHER"]
+  "name": "Eshmat31",
+  "surname": "Eshmatov31",
+  "username": "eshmat31@gmail.com",
+  "roleList": [
+    "ROLE_USER",
+    "ROLE_ADMIN"
+  ]
 }
 
-### GET PROFILE LIST
-GET http://localhost:8080/api/profile
 
-### DELETE PROFILE
-DELETE http://localhost:8080/api/profile/1
+### Get by id
+GET localhost:8080/api/v1/profile/3
+
+
+### Update Detail
+PUT localhost:8080/api/v1/profile/detail
+Content-Type: application/json
+ProfileId: 3
+
+{
+  "name": "Eshmat33",
+  "surname": "Eshmatov33"
+}
+
+
+### Pagination
+GET localhost:8080/api/v1/profile/pagination?page=1&size=2
+
+
+### Delete
+DELETE localhost:8080/api/v1/profile/1
+
+
+### Update Password
+PUT localhost:8080/api/v1/profile/password
+Content-Type: application/json
+ProfileId: 3
+
+{
+  "currentPassword": "12345",
+  "newPassword": "mazgi"
+}

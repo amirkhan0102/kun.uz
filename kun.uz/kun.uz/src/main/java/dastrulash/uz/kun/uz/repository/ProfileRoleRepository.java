@@ -1,16 +1,27 @@
 package dastrulash.uz.kun.uz.repository;
 
-import dastrulash.uz.kun.uz.entity.ProfileEntity;
+
 import dastrulash.uz.kun.uz.entity.ProfileRoleEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
+import dastrulash.uz.kun.uz.enums.ProfileRoleEnum;
+import jakarta.transaction.Transactional;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface ProfileRoleRepository extends JpaRepository<ProfileRoleEntity, Long> {
+public interface ProfileRoleRepository extends CrudRepository<ProfileRoleEntity, Integer> {
 
-    List<ProfileRoleEntity> findByProfileId(Long id);
+    @Query("select roles from ProfileRoleEntity where profileId =?1")
+    List<ProfileRoleEnum> getRoleListByProfileId(Integer profileId);
 
-    void deleteByProfileId(Long id);
+    @Transactional
+    @Modifying
+    @Query("Delete from ProfileRoleEntity where profileId =?1 and roles =?2")
+    void deleteByIdAndRoleEnum(Integer profileId, ProfileRoleEnum role);
 
-
+    @Transactional
+    @Modifying
+    @Query("Delete from ProfileRoleEntity where profileId =?1")
+    void deleteByProfileId(Integer profileId);
 }

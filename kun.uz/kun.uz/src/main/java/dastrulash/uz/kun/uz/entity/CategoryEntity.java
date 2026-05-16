@@ -1,23 +1,20 @@
 package dastrulash.uz.kun.uz.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "category")
-@Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@Getter
 public class CategoryEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "order_number")
     private Integer orderNumber;
@@ -32,12 +29,13 @@ public class CategoryEntity {
     private String nameEn;
 
     @Column(name = "category_key")
-    private String key;
+    private String categoryKey;
 
     @Column(name = "visible")
     private Boolean visible = true;
 
     @Column(name = "created_date")
     @CreationTimestamp
-    private LocalDateTime createdDate = LocalDateTime.now();
+    private LocalDateTime createdDate;
+
 }

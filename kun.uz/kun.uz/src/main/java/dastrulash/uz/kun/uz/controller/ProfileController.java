@@ -1,51 +1,69 @@
 package dastrulash.uz.kun.uz.controller;
 
-import dastrulash.uz.kun.uz.dto.ProfileCreateDTO;
-import dastrulash.uz.kun.uz.dto.ProfileInfoDTO;
-import dastrulash.uz.kun.uz.dto.ProfileUpdateDTO;
+
+import dastrulash.uz.kun.uz.dto.profile.*;
 import dastrulash.uz.kun.uz.service.ProfileService;
-import lombok.RequiredArgsConstructor;
+import dastrulash.uz.kun.uz.util.PageUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
-@RequestMapping("/api/profile")
-@RequiredArgsConstructor
+@RequestMapping("/api/v1/profile")
 public class ProfileController {
 
-    private final ProfileService profileService;
+    @Autowired
+    private ProfileService profileService;
 
-    // 1. Create (ADMIN)
-    @PostMapping
-    public ResponseEntity<ProfileInfoDTO> create(@Valid @RequestBody ProfileCreateDTO dto) {
+    @PostMapping("")
+    public ResponseEntity<ProfileDTO> create(@Valid @RequestBody ProfileDTO dto) {
         return ResponseEntity.ok(profileService.create(dto));
     }
 
-    // 2. Get By Id (ADMIN)
-    @GetMapping("/{id}")
-    public ResponseEntity<ProfileInfoDTO> getById(@PathVariable Long id) {
-        return ResponseEntity.ok(profileService.getById(id));
-    }
-
-    // 3. Update (ADMIN)
     @PutMapping("/{id}")
-    public ResponseEntity<ProfileInfoDTO> update(@PathVariable Long id,
-                                                 @Valid @RequestBody ProfileUpdateDTO dto) {
+    public ResponseEntity<ProfileDTO> update(@PathVariable("id") Integer id,
+                                             @Valid @RequestBody ProfileUpdateDTO dto) { // ADMIN
         return ResponseEntity.ok(profileService.update(id, dto));
     }
 
-    // 4. Delete (ADMIN)
+    @GetMapping("/{id}")
+    public ResponseEntity<ProfileDTO> byId(@PathVariable("id") Integer id) { // ADMIN
+        return ResponseEntity.ok(profileService.getById(id));
+    }
+
+    @PutMapping("/detail")
+    public ResponseEntity<ProfileDTO> updateDetail(
+            @RequestHeader("ProfileId") Integer currentProfileId,
+            @Valid @RequestBody ProfileUpdateDetailDTO dto) { // ANY
+        return ResponseEntity.ok(profileService.updateDetail(currentProfileId, dto));
+    }
+
+    @GetMapping("/pagination")
+    public ResponseEntity<PageImpl<ProfileDTO>> pagination(
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size) {
+        return ResponseEntity.ok(profileService.pagination(PageUtil.page(page), size));
+    }
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id) {
+    public ResponseEntity<Boolean> delete(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(profileService.delete(id));
     }
 
-    // 5. Get List (ADMIN)
-    @GetMapping
-    public ResponseEntity<List<ProfileInfoDTO>> getList() {
-        return ResponseEntity.ok(profileService.getList());
+    @PutMapping("/password")
+    public ResponseEntity<Boolean> password(@RequestHeader("ProfileId") Integer currentProfileId,
+                                            @Valid @RequestBody ProfileUpdatePasswordDTO dto) {
+        return ResponseEntity.ok(profileService.updatePassword(currentProfileId, dto));
     }
+
+    // Buni to'liq keyinroq qilamiz. Attach mavzusida
+    @PutMapping("/photo")
+    public ResponseEntity<Boolean> update(@RequestHeader("ProfileId") Integer currentProfileId,
+                                          @Valid @RequestBody ProfileUpdatePhotoDTO dto) {
+        return ResponseEntity.ok(profileService.updatePhoto(currentProfileId, dto));
+    }
+
 }

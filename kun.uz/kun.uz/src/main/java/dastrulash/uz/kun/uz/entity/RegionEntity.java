@@ -1,23 +1,21 @@
 package dastrulash.uz.kun.uz.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "region")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@Entity
+@Table(name = "region")
 public class RegionEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "order_number")
     private Integer orderNumber;
@@ -32,13 +30,13 @@ public class RegionEntity {
     private String nameEn;
 
     @Column(name = "region_key")
-    private String key;
-
+    private String regionKey;
 
     @Column(name = "visible")
     private Boolean visible = true;
 
     @Column(name = "created_date")
     @CreationTimestamp
-    private LocalDateTime createdDate = LocalDateTime.now();
+    private LocalDateTime createdDate;
+
 }

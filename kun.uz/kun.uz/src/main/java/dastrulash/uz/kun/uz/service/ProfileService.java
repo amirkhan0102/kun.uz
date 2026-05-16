@@ -1,121 +1,142 @@
 package dastrulash.uz.kun.uz.service;
 
-import dastrulash.uz.kun.uz.dto.ProfileCreateDTO;
-import dastrulash.uz.kun.uz.dto.ProfileInfoDTO;
-import dastrulash.uz.kun.uz.dto.ProfileUpdateDTO;
+
+import dastrulash.uz.kun.uz.dto.profile.*;
 import dastrulash.uz.kun.uz.entity.ProfileEntity;
-import dastrulash.uz.kun.uz.entity.ProfileRoleEntity;
-import dastrulash.uz.kun.uz.enums.ProfileRoleEnum;
 import dastrulash.uz.kun.uz.enums.ProfileStatusEnum;
 import dastrulash.uz.kun.uz.exceptions.AppBadException;
 import dastrulash.uz.kun.uz.repository.ProfileRepository;
-import dastrulash.uz.kun.uz.repository.ProfileRoleRepository;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-
+import javax.validation.Valid;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class ProfileService {
+    @Autowired
+    private ProfileRepository profileRepository;
+    @Autowired
+    private ProfileRoleService profileRoleService;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    private final ProfileRepository profileRepository;
-    private final ProfileRoleRepository profileRoleRepository;
-    private final BCryptPasswordEncoder passwordEncoder;
-
-    // 1. Create Profile (ADMIN)
-    public ProfileInfoDTO create(ProfileCreateDTO dto) {
-        if (profileRepository.existsByUsername(dto.getUsername())) {
-            throw new AppBadException("Username already exists");
+    public ProfileDTO create(ProfileDTO profile) {
+        Optional<ProfileEntity> optional = profileRepository.findByUsernameAndVisibleIsTrue(profile.getUsername());
+        if (optional.isPresent()) {
+            throw new AppBadException("User exists");
         }
         ProfileEntity entity = new ProfileEntity();
+        entity.setName(profile.getName());
+        entity.setSurname(profile.getSurname());
+
+        entity.setPassword(bCryptPasswordEncoder.encode(profile.getPassword()));
+        entity.setUsername(profile.getUsername());
+        entity.setStatus(ProfileStatusEnum.ACTIVE);
+        entity.setVisible(Boolean.TRUE);
+        profileRepository.save(entity); // save
+        // role_save
+        profileRoleService.create(Math.toIntExact(entity.getId()), profile.getRoleList());
+        // result
+        ProfileDTO response = toDTO(entity);
+        return response;
+    }
+
+
+    public ProfileDTO update(Integer id, ProfileUpdateDTO dto) {
+        ProfileEntity entity = get(id);
+        // check username exists
+        Optional<ProfileEntity> usernameOptional = profileRepository.findByUsernameAndVisibleIsTrue(dto.getUsername());
+        if (usernameOptional.isPresent() && !usernameOptional.get().getId().equals(id)) {
+            throw new AppBadException("Username exists");
+        }
+        //
         entity.setName(dto.getName());
         entity.setSurname(dto.getSurname());
         entity.setUsername(dto.getUsername());
-        entity.setPassword(passwordEncoder.encode(dto.getPassword()));
-        entity.setStatus(dto.getStatus() != null ? dto.getStatus() : ProfileStatusEnum.ACTIVE);
-        profileRepository.save(entity);
-
-        // Rollarni saqlash
-        saveRoles(entity, dto.getRoleList());
-
-        return toInfoDTO(entity);
+        profileRepository.save(entity); // update
+        // role_save
+        profileRoleService.merge(Math.toIntExact(entity.getId()), dto.getRoleList());
+        // result
+        ProfileDTO response = toDTO(entity);
+        response.setRoleList(dto.getRoleList());
+        return response;
     }
 
-    // 2. Get By Id (ADMIN)
-    public ProfileInfoDTO getById(Long id) {
-        return toInfoDTO(getEntityById(id));
+    public ProfileDTO getById(Integer id) {
+        ProfileEntity profile = get(id);
+        ProfileDTO dto = toDTO(profile);
+        dto.setRoleList(profileRoleService.getByProfileId(id));
+        return dto;
     }
 
-    // 3. Update Profile (ADMIN)
-    public ProfileInfoDTO update(Long id, ProfileUpdateDTO dto) {
-        ProfileEntity entity = getEntityById(id);
+    public ProfileDTO updateDetail(Integer currentProfileId, ProfileUpdateDetailDTO dto) {
+        ProfileEntity entity = get(currentProfileId);
         entity.setName(dto.getName());
         entity.setSurname(dto.getSurname());
-        entity.setStatus(dto.getStatus());
-        profileRepository.save(entity);
-
-        // Rollarni yangilash
-        profileRoleRepository.deleteByProfileId(id);
-        saveRoles(entity, dto.getRoleList());
-
-        return toInfoDTO(entity);
+        profileRepository.save(entity); // update
+        return toDTO(entity);
     }
 
-    // 4. Delete (ADMIN)
-    public String delete(Long id) {
-        ProfileEntity entity = getEntityById(id);
-        entity.setVisible(false);
-        profileRepository.save(entity);
-        return "Profile deleted";
+    public PageImpl<ProfileDTO> pagination(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdDate").descending());
+        Page<ProfileEntity> result = profileRepository.findAllWithRoles(pageable);
+
+        List<ProfileDTO> dtoList = new LinkedList<>();
+        for (ProfileEntity profile : result.getContent()) {
+            dtoList.add(toDTO(profile));
+        }
+        return new PageImpl<>(dtoList, pageable, result.getTotalElements());
     }
 
-    // 5. Get List (ADMIN)
-    public List<ProfileInfoDTO> getList() {
-        return profileRepository.findAll()
-                .stream()
-                .filter(e -> e.getVisible())
-                .map(this::toInfoDTO)
-                .collect(Collectors.toList());
+    public Boolean delete(Integer id) {
+        ProfileEntity entity = get(id);
+        entity.setVisible(true);
+        profileRepository.save(entity); // or write a JPA query to update only visible
+        return true;
     }
 
-    // Helper methods
-    private void saveRoles(ProfileEntity entity, List<ProfileRoleEnum> roleList) {
-        if (roleList == null || roleList.isEmpty()) return;
-        roleList.forEach(role -> {
-            ProfileRoleEntity roleEntity = new ProfileRoleEntity();
-            roleEntity.setProfile(entity);
-            roleEntity.setRoles(role);
-            profileRoleRepository.save(roleEntity);
-        });
+    public Boolean updatePassword(Integer currentProfileId, @Valid ProfileUpdatePasswordDTO dto) {
+        ProfileEntity profile = get(currentProfileId);
+        if (!bCryptPasswordEncoder.matches(dto.getCurrentPassword(), profile.getPassword())) {
+            throw new AppBadException("Wrong password");
+        }
+        profile.setPassword(bCryptPasswordEncoder.encode(dto.getNewPassword()));
+        profileRepository.save(profile);
+        return true;
     }
 
-    private ProfileEntity getEntityById(Long id) {
-        return profileRepository.findById(id)
-                .orElseThrow(() -> new AppBadException("Profile not found"));
+    // Buni to'liq keyinroq qilamiz. Attach mavzusida
+    public Boolean updatePhoto(Integer currentProfileId, @Valid ProfileUpdatePhotoDTO dto) {
+        ProfileEntity profile = get(currentProfileId);
+        profile.setPhotoId(dto.getPhotoId());
+        profileRepository.save(profile);
+        return true;
     }
 
-    private ProfileInfoDTO toInfoDTO(ProfileEntity entity) {
-        ProfileInfoDTO dto = new ProfileInfoDTO();
-        dto.setId(entity.getId());
+    public ProfileDTO toDTO(ProfileEntity entity) {
+        ProfileDTO dto = new ProfileDTO();
+        dto.setId(Math.toIntExact(entity.getId()));
         dto.setName(entity.getName());
         dto.setSurname(entity.getSurname());
         dto.setUsername(entity.getUsername());
-        dto.setStatus(entity.getStatus());
-        dto.setPhotoId(entity.getPhotoId());
         dto.setCreatedDate(entity.getCreatedDate());
-
-        // Rollarni olish
-        List<ProfileRoleEnum> roles = profileRoleRepository
-                .findByProfileId(entity.getId())
-                .stream()
-                .map(ProfileRoleEntity::getRoles)
-                .collect(Collectors.toList());
-        dto.setRoleList(roles);
-
         return dto;
     }
+
+    public ProfileEntity get(Integer id) {
+        return profileRepository.findByIdAndVisibleIsTrue(id).orElseThrow(() -> {
+            throw new AppBadException("Profile not found");
+        });
+        /*Optional<ProfileEntity> optional = profileRepository.findByIdAndVisibleIsTrue(id);
+        if (optional.isEmpty()) {
+            throw new AppBadException("Profile not found");
+        }
+        return optional.get();*/
+    }
+
 }
