@@ -11,6 +11,34 @@ Content-Type: application/json
 }
 
 
+
+### Token bilan
+POST localhost:8080/api/v1/category
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYXZxb2NoZGl5ZXZAZ21haWwuY29tIiwicHJvZmlsZUlkIjoxLCJpYXQiOjE3Nzg5MjU5ODMsImV4cCI6MTc3OTAxMjM4M30.3h9ZLn92tCb80utl6p24hUOJ_Hu0_K7eGjYZ2wuaCx4
+
+{
+  "orderNumber": 6,
+  "nameUz": "Sport",
+  "nameRu": "Спорт",
+  "nameEn": "Sport",
+  "categoryKey": "sport"
+}
+
+###
+POST localhost:8080/api/v1/category
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYXZxb2NoZGl5ZXZAZ21haWwuY29tIiwicHJvZmlsZUlkIjoxLCJpYXQiOjE3Nzg5MjcxNjgsImV4cCI6MTc3OTAxMzU2OH0.mkbir78RpxJKRytyeZSeRl0TMZRMMeDIU1Y-0Hv0GHs
+
+{
+"orderNumber": 6,
+"nameUz": "Sport",
+"nameRu": "Спорт",
+"nameEn": "Sport",
+"categoryKey": "sport"
+}
+
+
 ### Update category
 PUT localhost:8080/api/v1/category/1
 Content-Type: application/json
