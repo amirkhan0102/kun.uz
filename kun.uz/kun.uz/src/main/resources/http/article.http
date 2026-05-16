@@ -1,0 +1,26 @@
+### Create Article
+POST localhost:8080/api/v1/article
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJwcm9maWxlSWQiOjIsImlhdCI6MTc3ODkzNDg5NywiZXhwIjoxNzc5MDIxMjk3fQ.H537Zn-Tn14rICkvXooVJj_cY7UnRfpzuBk2qe9w-Ws
+
+{
+  "title": "Test maqola",
+  "description": "Test tavsif",
+  "content": "Test kontent",
+  "categoryIds": [1],
+  "sectionIds": [1],
+  "readTime": 3
+}
+
+
+### Change status (PUBLISHED)
+PUT localhost:8080/api/v1/article/096393a8-751b-469f-b95b-d44696d22519/status?status=PUBLISHED
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJwcm9maWxlSWQiOjIsImlhdCI6MTc3ODkzNDg5NywiZXhwIjoxNzc5MDIxMjk3fQ.H537Zn-Tn14rICkvXooVJj_cY7UnRfpzuBk2qe9w-Ws
+
+
+### Get by sectionId
+GET localhost:8080/api/v1/article/section/1
+
+### Get by id
+GET localhost:8080/api/v1/article/096393a8-751b-469f-b95b-d44696d22519
+Accept-Language: UZ

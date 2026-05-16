@@ -3,6 +3,7 @@ package dastrulash.uz.kun.uz.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -34,6 +35,11 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/category/lang/**").permitAll()
                         .requestMatchers("/api/v1/region/lang/**").permitAll()
                         .requestMatchers("/api/v1/section/lang/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/article/**").permitAll()
+                        // Moderator
+                        .requestMatchers(HttpMethod.POST, "/api/v1/article").hasRole("MODERATOR")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/article/**").hasAnyRole("MODERATOR", "PUBLISHER")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/article/**").hasRole("MODERATOR")
                         // Admin only
                         .requestMatchers("/api/v1/profile/**").hasRole("ADMIN")
                         .requestMatchers("/api/v1/category/**").hasRole("ADMIN")

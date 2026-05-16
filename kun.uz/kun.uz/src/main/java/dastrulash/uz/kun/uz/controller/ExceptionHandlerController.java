@@ -1,4 +1,4 @@
-package dasturlash.uz.controller;
+package dastrulash.uz.kun.uz.controller;
 
 import dastrulash.uz.kun.uz.exceptions.AppBadException;
 import org.springframework.http.HttpHeaders;

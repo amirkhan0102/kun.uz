@@ -4,12 +4,13 @@ package dastrulash.uz.kun.uz.controller;
 import dastrulash.uz.kun.uz.dto.profile.*;
 import dastrulash.uz.kun.uz.service.ProfileService;
 import dastrulash.uz.kun.uz.util.PageUtil;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+
 
 @RestController
 @RequestMapping("/api/v1/profile")
