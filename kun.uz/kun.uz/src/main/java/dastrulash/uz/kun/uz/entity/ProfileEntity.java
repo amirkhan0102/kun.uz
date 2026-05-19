@@ -38,7 +38,13 @@ public class ProfileEntity {
     private ProfileStatusEnum status;
 
     @Column(name = "photo_id")
-    private String photoId; // Will do it later (in attach topic)
+    private String photoId;
+
+    @Column(name = "email_code")
+    private String emailCode;
+
+    @Column(name = "email_code_date")
+    private LocalDateTime emailCodeDate;
 
     @Column(name = "visible", nullable = false)
     private Boolean visible = true;

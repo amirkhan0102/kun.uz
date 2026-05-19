@@ -56,4 +56,22 @@ public class EmailService {
         entity.setMessage(message);
         emailHistoryRepository.save(entity);
     }
+
+    public void sendVerificationCode(String toEmail, String code) {
+        // Limit tekshirish
+        checkEmailLimit(toEmail);
+
+        String message = "Tasdiqlash kodingiz: " + code + "\n\nKod 2 daqiqa ichida amal qiladi.";
+
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setFrom(fromEmail);
+        mailMessage.setTo(toEmail);
+        mailMessage.setSubject("Tasdiqlash kodi - TopNews");
+        mailMessage.setText(message);
+        mailSender.send(mailMessage);
+
+        // Tarixga saqlash
+        saveHistory(toEmail, message);
+    }
+
 }

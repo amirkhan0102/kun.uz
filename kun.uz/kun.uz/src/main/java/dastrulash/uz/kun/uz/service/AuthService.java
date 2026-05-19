@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,11 +39,15 @@ public class AuthService {
 
     // 1. Registration
     public String register(RegistrationDTO dto) {
-        // Username mavjudmi?
+
+
         Optional<ProfileEntity> optional = profileRepository.findByUsernameAndVisibleIsTrue(dto.getUsername());
         if (optional.isPresent()) {
             throw new AppBadException("Username already exists");
         }
+
+        // 4 xonali kod randomniy generation qilish
+        String code = String.valueOf((int)(Math.random() * 9000) + 1000);
 
         // Profile saqlash
         ProfileEntity entity = new ProfileEntity();
@@ -52,6 +57,8 @@ public class AuthService {
         entity.setPassword(passwordEncoder.encode(dto.getPassword()));
         entity.setStatus(ProfileStatusEnum.NOT_ACTIVE);
         entity.setVisible(true);
+        entity.setEmailCode(code);
+        entity.setEmailCodeDate(LocalDateTime.now());
         profileRepository.save(entity);
 
         // Role saqlash
@@ -60,30 +67,34 @@ public class AuthService {
         roleEntity.setRoles(ProfileRoleEnum.ROLE_USER);
         profileRoleRepository.save(roleEntity);
 
-        // Verification token yaratish
-        String token = jwtUtil.generateToken(entity.getUsername(), entity.getId());
-        String verificationLink = serverUrl + "/api/v1/auth/verify?token=" + token;
-
         // Email yuborish
-        emailService.sendVerificationEmail(entity.getUsername(), verificationLink);
+        emailService.sendVerificationCode(entity.getUsername(), code);
 
-        return "Verification email sent to: " + entity.getUsername();
+        return "Verification code sent to: " + entity.getUsername();
     }
 
     // 2. Verification
-    public String verify(String token) {
-        if (!jwtUtil.isValid(token)) {
-            throw new AppBadException("Token invalid or expired");
-        }
-        String username = jwtUtil.getUsername(token);
-        ProfileEntity entity = profileRepository.findByUsernameAndVisibleIsTrue(username)
+    public String verify(String email, String code) {
+        ProfileEntity entity = profileRepository.findByUsernameAndVisibleIsTrue(email)
                 .orElseThrow(() -> new AppBadException("Profile not found"));
 
         if (entity.getStatus().equals(ProfileStatusEnum.ACTIVE)) {
             throw new AppBadException("Already verified");
         }
 
+        // Kod to'g'rimi?
+        if (!entity.getEmailCode().equals(code)) {
+            throw new AppBadException("Wrong code");
+        }
+
+        // Kod muddati — 2 daqiqa
+        if (entity.getEmailCodeDate().plusMinutes(2).isBefore(LocalDateTime.now())) {
+            throw new AppBadException("Code expired. Please resend.");
+        }
+
         entity.setStatus(ProfileStatusEnum.ACTIVE);
+        entity.setEmailCode(null);
+        entity.setEmailCodeDate(null);
         profileRepository.save(entity);
         return "Email verified successfully!";
     }

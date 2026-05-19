@@ -32,7 +32,7 @@ public class ProfileRoleService {
     }
 
     // old -> "ROLE_USER", "ROLE_ADMIN"
-    // new -> "ROLE_USER", "ROLE_MODERATOR"
+    // new -> "ROLE_USER", "ROLE_MODERAT    OR"
     public void create(Integer profileId, ProfileRoleEnum role) {
         ProfileRoleEntity entity = new ProfileRoleEntity();
         entity.setProfileId(profileId);

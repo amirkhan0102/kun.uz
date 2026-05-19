@@ -23,12 +23,12 @@ public class AuthController {
         return ResponseEntity.ok(authService.register(dto));
     }
 
-    // 2. Verify
-    @GetMapping("/verify")
-    public ResponseEntity<String> verify(@RequestParam String token) {
-        return ResponseEntity.ok(authService.verify(token));
+    // 2. Verify — kod bilan
+    @PostMapping("/verify")
+    public ResponseEntity<String> verify(@RequestParam String email,
+                                         @RequestParam String code) {
+        return ResponseEntity.ok(authService.verify(email, code));
     }
-
 
 
     @PostMapping("/login")

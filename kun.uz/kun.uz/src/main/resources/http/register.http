@@ -8,3 +8,20 @@ Content-Type: application/json
   "username": "javqochdiyev@gmail.com",
   "password": "12345"
 }
+
+
+
+### Register
+POST localhost:8080/api/v1/auth/register
+Content-Type: application/json
+
+{
+  "name": "Test",
+  "surname": "User",
+  "username": "javqochdiyev@gmail.com",
+  "password": "12345"
+}
+
+
+### Verify
+POST localhost:8080/api/v1/auth/verify?email=javqochdiyev@gmail.com&code=7772
