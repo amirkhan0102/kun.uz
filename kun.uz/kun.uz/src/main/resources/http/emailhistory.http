@@ -1,0 +1,7 @@
+### Get by email (ADMIN token bilan)
+GET localhost:8080/api/v1/email-history/by-email?email=javqochdiyev@gmail.com
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYXZxb2NoZGl5ZXZAZ21haWwuY29tIiwicHJvZmlsZUlkIjo2LCJpYXQiOjE3NzkxOTI3NDcsImV4cCI6MTc3OTI3OTE0N30.12aPlsXZCgG3ojT1zwl7lpVWlWoVOVAtkMJGLBXLqxI
+
+### Pagination
+GET localhost:8080/api/v1/email-history/pagination?page=0&size=10
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYXZxb2NoZGl5ZXZAZ21haWwuY29tIiwicHJvZmlsZUlkIjo2LCJpYXQiOjE3NzkxOTI3NDcsImV4cCI6MTc3OTI3OTE0N30.12aPlsXZCgG3ojT1zwl7lpVWlWoVOVAtkMJGLBXLqxI

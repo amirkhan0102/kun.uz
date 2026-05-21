@@ -45,6 +45,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/category/**").hasRole("ADMIN")
                         .requestMatchers("/api/v1/region/**").hasRole("ADMIN")
                         .requestMatchers("/api/v1/section/**").hasRole("ADMIN")
+                        .requestMatchers("/api/v1/email-history/**").hasRole("ADMIN")
+
                         // Boshqa hammasi login talab qiladi
                         .anyRequest().authenticated()
                 )
