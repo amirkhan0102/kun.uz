@@ -1,0 +1,2 @@
+GET localhost:8080/api/v1/sms-history/pagination?page=0&size=10
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYXZxb2NoZGl5ZXZAZ21haWwuY29tIiwicHJvZmlsZUlkIjo2LCJpYXQiOjE3NzkzNjA1NzYsImV4cCI6MTc3OTQ0Njk3Nn0.qKhzYOFIQIdc7s3P4Zhk3GqfitocSWggZEhInfu0OF8

@@ -34,6 +34,9 @@ public class AuthService {
     @Autowired
     private JwtUtil jwtUtil;
 
+    @Autowired
+    private SmsService smsService;
+
     @Value("${server.url}")
     private String serverUrl;
 
@@ -69,6 +72,10 @@ public class AuthService {
 
         // Email yuborish
         emailService.sendVerificationCode(entity.getUsername(), code);
+
+        // server qushgach ushbu metodni ishlatamiza
+
+         smsService.sendSms(entity.getUsername(), code);
 
         return "Verification code sent to: " + entity.getUsername();
     }
