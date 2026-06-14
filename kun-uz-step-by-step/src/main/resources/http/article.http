@@ -1,0 +1,78 @@
+### Article create
+POST localhost:8080/api/v1/article/moderator
+Content-Type: application/json
+Authorization:  Bearer {{jwt}}
+
+
+{
+  "title": "Article title 1",
+  "description": "Article 1 description",
+  "content": "Article 1 content",
+  "imageId": "9b31e07c-f5c8-45f8-978b-9f21772c0970.jpg",
+  "regionId": 1,
+  "readTime": 60,
+  "categoryList": [
+    {
+      "id": 1
+    },
+    {
+      "id": 2
+    }
+  ],
+  "sectionList": [
+    {
+      "id": 1
+    },
+    {
+      "id": 2
+    }
+  ]
+}
+
+
+### Article update
+PUT localhost:8080/api/v1/article/moderator/744634f8-42fb-4925-9827-85b726fe1a97
+Content-Type: application/json
+Authorization:  Bearer {{jwt}}
+
+{
+  "title": "Article title 1",
+  "description": "Article 1 description",
+  "content": "Article 1 content",
+  "imageId": "9b31e07c-f5c8-45f8-978b-9f21772c0970.jpg",
+  "regionId": 1,
+  "readTime": 60,
+  "categoryList": [
+    {
+      "id": 1
+    },
+    {
+      "id": 2
+    }
+  ],
+  "sectionList": [
+    {
+      "id": 1
+    },
+    {
+      "id": 2
+    }
+  ]
+}
+
+
+### Article update
+DELETE localhost:8080/api/v1/article/moderator/744634f8-42fb-4925-9827-85b726fe1a97
+Authorization:  Bearer {{jwt}}
+
+### Article change status
+PUT localhost:8080/api/v1/article/moderator/744634f8-42fb-4925-9827-85b726fe1a97/status
+Authorization:  Bearer {{jwt}}
+Content-Type:  application/json
+
+{
+  "status": "PUBLISHED"
+}
+
+### Article update
+GET localhost:8080/api/v1/article/section/1
