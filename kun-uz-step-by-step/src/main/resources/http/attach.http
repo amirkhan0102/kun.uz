@@ -5,14 +5,14 @@ Content-Type: multipart/form-data; boundary=WebAppBoundary
 --WebAppBoundary
 Content-Disposition: form-data; name="file"; filename="zari.jpg"
 
-< C:\Users\Bobur_Jumaniyazov\Desktop\images\zari.jpg
+< D:\for fun\pictures\Amriddin.png
 
 
 ### Open
-GET http://localhost:8080/api/v1/attach/open/8a6c73cf-f39c-433f-b793-c5585b023530.jpg
+GET http://localhost:8080/api/v1/attach/open/9877dfa5-67fb-4108-84b2-826f8b42627b.jpg
 
 ### Download
-GET http://localhost:8080/api/v1/attach/download/8f5f60ec-e483-472b-ab93-4b82fe494022.jpg
+GET http://localhost:8080/api/v1/attach/download/216c05c8-5b66-481b-a163-c54057ad5f97.jpg
 
 ### Pagination
 GET http://localhost:8080/api/v1/attach?page=1&size=10

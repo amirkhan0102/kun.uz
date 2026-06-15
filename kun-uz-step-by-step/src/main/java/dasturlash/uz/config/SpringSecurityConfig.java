@@ -31,6 +31,7 @@ public class SpringSecurityConfig {
             "/api/v1/category/lang",
             "/api/v1/region/lang",
             "/api/v1/article/section/*",
+            "/api/v1/article/last-12",
     };
 
     @Bean

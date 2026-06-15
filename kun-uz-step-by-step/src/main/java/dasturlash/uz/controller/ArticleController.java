@@ -1,8 +1,6 @@
 package dasturlash.uz.controller;
 
-import dasturlash.uz.dto.article.ArticleChangeStatusDTO;
-import dasturlash.uz.dto.article.ArticleCreateDTO;
-import dasturlash.uz.dto.article.ArticleDTO;
+import dasturlash.uz.dto.article.*;
 import dasturlash.uz.enums.ArticleStatus;
 import dasturlash.uz.enums.ProfileStatus;
 import dasturlash.uz.service.ArticleService;
@@ -49,4 +47,11 @@ public class ArticleController {
                                                          @RequestParam(value = "limit", defaultValue = "5") int limit) {
         return ResponseEntity.ok(articleService.getBySectionId(sectionId, limit));
     }
+
+    @PostMapping("/last-12")
+    public ResponseEntity<List<ArticleShortInfoDTO>> getLast12ExceptIds(@RequestBody ArticleLast12ReqDTO dto){
+        return ResponseEntity.ok(articleService.getLast12ExceptIds(dto.getIds()));
+    }
+
+
 }

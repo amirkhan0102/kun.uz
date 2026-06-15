@@ -1,15 +1,14 @@
 ### Article create
 POST localhost:8080/api/v1/article/moderator
 Content-Type: application/json
-Authorization:  Bearer {{jwt}}
-
+Authorization:  Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfQURNSU4iXSwidXNlcm5hbWUiOiJlc2htYXQ1QGdtYWlsLmNvbSIsInN1YiI6ImVzaG1hdDVAZ21haWwuY29tIiwiaWF0IjoxNzgxNDk5MjczLCJleHAiOjE3ODE1ODU2NzN9.gJfI8xp5AuiV3xfwL0yExlySLQtmSQSDmvfpE52VPvwWOSL72yieXdNdXPG8rpAh31odZdJnpOUqroWVcL7o4g
 
 {
-  "title": "Article title 1",
-  "description": "Article 1 description",
-  "content": "Article 1 content",
-  "imageId": "9b31e07c-f5c8-45f8-978b-9f21772c0970.jpg",
-  "regionId": 1,
+  "title": "Article title 2",
+  "description": "Article 2 description",
+  "content": "Article 2 content",
+  "imageId": "216c05c8-5b66-481b-a163-c54057ad5f97.jpg",
+  "regionId": 2,
   "readTime": 60,
   "categoryList": [
     {
@@ -30,16 +29,17 @@ Authorization:  Bearer {{jwt}}
 }
 
 
+
 ### Article update
 PUT localhost:8080/api/v1/article/moderator/744634f8-42fb-4925-9827-85b726fe1a97
 Content-Type: application/json
-Authorization:  Bearer {{jwt}}
+Authorization:  Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfQURNSU4iXSwidXNlcm5hbWUiOiJlc2htYXQ1QGdtYWlsLmNvbSIsInN1YiI6ImVzaG1hdDVAZ21haWwuY29tIiwiaWF0IjoxNzgxNDk5MjczLCJleHAiOjE3ODE1ODU2NzN9.gJfI8xp5AuiV3xfwL0yExlySLQtmSQSDmvfpE52VPvwWOSL72yieXdNdXPG8rpAh31odZdJnpOUqroWVcL7o4g
 
 {
   "title": "Article title 1",
   "description": "Article 1 description",
   "content": "Article 1 content",
-  "imageId": "9b31e07c-f5c8-45f8-978b-9f21772c0970.jpg",
+  "imageId": "9877dfa5-67fb-4108-84b2-826f8b42627b.jpg",
   "regionId": 1,
   "readTime": 60,
   "categoryList": [
@@ -63,11 +63,12 @@ Authorization:  Bearer {{jwt}}
 
 ### Article update
 DELETE localhost:8080/api/v1/article/moderator/744634f8-42fb-4925-9827-85b726fe1a97
-Authorization:  Bearer {{jwt}}
+Authorization:  Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfQURNSU4iXSwidXNlcm5hbWUiOiJlc2htYXQ1QGdtYWlsLmNvbSIsInN1YiI6ImVzaG1hdDVAZ21haWwuY29tIiwiaWF0IjoxNzgxNDk5MjczLCJleHAiOjE3ODE1ODU2NzN9.gJfI8xp5AuiV3xfwL0yExlySLQtmSQSDmvfpE52VPvwWOSL72yieXdNdXPG8rpAh31odZdJnpOUqroWVcL7o4g
+
 
 ### Article change status
 PUT localhost:8080/api/v1/article/moderator/744634f8-42fb-4925-9827-85b726fe1a97/status
-Authorization:  Bearer {{jwt}}
+Authorization:  Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfQURNSU4iXSwidXNlcm5hbWUiOiJlc2htYXQ1QGdtYWlsLmNvbSIsInN1YiI6ImVzaG1hdDVAZ21haWwuY29tIiwiaWF0IjoxNzgxNTE0Njk0LCJleHAiOjE3ODE2MDEwOTR9.ndhWSgU52Q8RfWLXPxfbTqAzTgC6r7v4XrPeYxGuUsex1wMhevuKQNrthGsRfHTIAd5jZwCqLArsxK3cv7rs0A
 Content-Type:  application/json
 
 {
@@ -76,3 +77,12 @@ Content-Type:  application/json
 
 ### Article update
 GET localhost:8080/api/v1/article/section/1
+
+
+### Article last-12
+POST localhost:8080/api/v1/article/last-12
+Content-Type: application/json
+
+{
+  "ids": ["5932316a-66bf-4246-b2ac-de85e98471b7","5932316a-66bf-4246-b2ac-de85e98471b7"]
+}

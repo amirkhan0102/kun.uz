@@ -4,9 +4,11 @@ import dasturlash.uz.entity.ArticleEntity;
 import dasturlash.uz.enums.ArticleStatus;
 import dasturlash.uz.mapper.ArticleShortInfo;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -41,5 +43,9 @@ public interface ArticleRepository extends CrudRepository<ArticleEntity, String>
             " where ac.sectionId = ?1 and a.visible = true and a.status = 'PUBLISHED' " +
             " order by a.createdDate desc  limit ?2")
     List<ArticleShortInfo> getBySectionId(Integer sectionId, int limit);
+
+    @Query("select a from ArticleEntity a where a.id not in :ids " + "and a.visible=true and a.status='PUBLISHED' "+ "order by a.publishedDate desc")
+    List<ArticleEntity> findLast12ExceptIds(@Param("ids") List<String> ids, Pageable pageable);
+
 
 }

@@ -2,6 +2,7 @@ package dasturlash.uz.service;
 
 import dasturlash.uz.dto.article.ArticleCreateDTO;
 import dasturlash.uz.dto.article.ArticleDTO;
+import dasturlash.uz.dto.article.ArticleShortInfoDTO;
 import dasturlash.uz.entity.ArticleEntity;
 import dasturlash.uz.enums.ArticleStatus;
 import dasturlash.uz.exceptions.AppBadException;
@@ -9,7 +10,10 @@ import dasturlash.uz.mapper.ArticleShortInfo;
 import dasturlash.uz.repository.ArticleRepository;
 import dasturlash.uz.util.SpringSecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 
 import java.time.LocalDateTime;
 import java.util.LinkedList;
@@ -95,6 +99,30 @@ public class ArticleService {
         resultList.forEach(mapper -> responseList.add(toDTO(mapper)));
         return responseList;
     }
+
+
+
+    public List<ArticleShortInfoDTO> getLast12ExceptIds(List<String> ids) {
+        if (ids == null || ids.isEmpty()) {
+            ids = List.of("non-existing-id");
+        }
+        Pageable pageable = PageRequest.of(0, 12);
+        List<ArticleEntity> list = articleRepository.findLast12ExceptIds(ids, pageable);
+        return list.stream().map(this::toShortInfoDTO).toList();
+    }
+
+
+
+    private ArticleShortInfoDTO toShortInfoDTO(ArticleEntity article) {
+        ArticleShortInfoDTO dto = new ArticleShortInfoDTO();
+        dto.setId(article.getId());
+        dto.setTitle(article.getTitle());
+        dto.setDescription(article.getDescription());
+        dto.setImageId(article.getImageId());
+        dto.setPublishedDate(article.getPublishedDate());
+        return dto;
+    }
+
 
     private void toEntity(ArticleCreateDTO dto, ArticleEntity entity) {
         entity.setTitle(dto.getTitle());
