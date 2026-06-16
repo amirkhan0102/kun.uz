@@ -1,9 +1,6 @@
 package dasturlash.uz.service;
 
-import dasturlash.uz.dto.article.ArticleCreateDTO;
-import dasturlash.uz.dto.article.ArticleDTO;
-import dasturlash.uz.dto.article.ArticleFullInfoDTO;
-import dasturlash.uz.dto.article.ArticleShortInfoDTO;
+import dasturlash.uz.dto.article.*;
 import dasturlash.uz.entity.ArticleEntity;
 import dasturlash.uz.enums.ArticleStatus;
 import dasturlash.uz.exceptions.AppBadException;
@@ -223,6 +220,27 @@ public class ArticleService {
         Pageable pageable = PageRequest.of(0, 4);
         List<ArticleEntity> list=articleRepository.findTop4ByViewCount(pageable);
         return list.stream().map(this::toShortInfoDTO).toList();
+    }
+
+    //13 increase viewcount
+    public void increaseViewCount(String id){
+        articleRepository.increaseViewCount(id);
+    }
+
+    // 14 increase shared count
+    public void increaseSharedCount(String id){
+        articleRepository.increaseSharedCount(id);
+    }
+
+
+    // 15 filter by publisher
+    public Page<ArticleShortInfoDTO> filterByPublisher(ArticleFilterDTO dto,
+                                                       Integer publisherId,
+                                                       int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<ArticleEntity> articles = articleRepository.filterByPublisher(
+                dto.getTitle(), dto.getRegionId(), dto.getStatus(), publisherId, pageable);
+        return articles.map(this::toShortInfoDTO);
     }
 
 

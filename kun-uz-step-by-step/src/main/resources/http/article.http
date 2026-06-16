@@ -109,3 +109,23 @@ GET localhost:8080/api/v1/article/last-4/1/744634f8-42fb-4925-9827-85b726fe1a97
 
 ### API 12 - Most Read 4
 GET localhost:8080/api/v1/article/most-read
+
+### API 13 - Increase View Count
+PUT localhost:8080/api/v1/article/view/744634f8-42fb-4925-9827-85b726fe1a97
+
+
+### API 14 - Increase Share Count
+PUT localhost:8080/api/v1/article/share/744634f8-42fb-4925-9827-85b726fe1a97
+
+
+### API 15 - Filter by Publisher
+POST localhost:8080/api/v1/article/filter/publisher?page=0&size=10
+Content-Type: application/json
+Authorization: Bearer {{jwt}}
+
+{
+  "title": null,
+  "categoryId": null,
+  "regionId": null,
+  "status": null
+}

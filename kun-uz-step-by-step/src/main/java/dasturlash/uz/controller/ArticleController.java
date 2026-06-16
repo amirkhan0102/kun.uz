@@ -99,6 +99,34 @@ public class ArticleController {
     }
 
 
+    // 13 increase viewcount
+    @PutMapping("/view/{id}")
+    public ResponseEntity<Void> increaseViewCount(@PathVariable("id") String id) {
+        articleService.increaseViewCount(id);
+        return ResponseEntity.ok().build();
+    }
+
+
+    // 14 increase shared count
+    @PutMapping("/share/{id}")
+    public ResponseEntity<Void> increaseSharedCount(@PathVariable("id") String id){
+        articleService.increaseSharedCount(id);
+        return ResponseEntity.ok().build();
+    }
+
+
+    // 15 filter By Publisher
+    // 15. FILTER BY PUBLISHER
+    @PreAuthorize("hasRole('PUBLISHER')")
+    @PostMapping("/filter/publisher")
+    public ResponseEntity<Page<ArticleShortInfoDTO>> filterByPublisher(
+            @RequestBody ArticleFilterDTO dto,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Integer publisherId = getCurrentProfileId();
+        return ResponseEntity.ok(articleService.filterByPublisher(dto, publisherId, page, size));
+    }
+
 
 
 

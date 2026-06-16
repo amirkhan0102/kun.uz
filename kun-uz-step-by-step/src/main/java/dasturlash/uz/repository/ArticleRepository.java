@@ -77,12 +77,38 @@ public interface ArticleRepository extends CrudRepository<ArticleEntity, String>
                                                      @Param("articleId") String articleId,
                                                      Pageable pageable);
 
-
+// 12 most read 4 by view count
     @Query("SELECT a FROM ArticleEntity a " +
             "WHERE a.visible = true AND a.status = 'PUBLISHED' " +
             "ORDER BY a.viewCount DESC")
     List<ArticleEntity> findTop4ByViewCount(Pageable pageable);
 
+// 13 view count ++
+    @Modifying
+    @Transactional
+    @Query("update ArticleEntity a set a.viewCount=a.viewCount+1  where a.id=:id ")
+    void increaseViewCount(@Param("id") String id);
 
+
+    // 14 increase share count
+    @Modifying
+    @Transactional
+    @Query("update ArticleEntity a set a.sharedCount = a.sharedCount + where a.id=:id")
+    void increaseSharedCount(@Param("id") String id);
+
+
+    // 15
+    @Query("SELECT a FROM ArticleEntity a WHERE " +
+            "(:title IS NULL OR a.title LIKE %:title%) AND " +
+            "(:regionId IS NULL OR a.regionId = :regionId) AND " +
+            "(:status IS NULL OR a.status = :status) AND " +
+            "a.publisherId = :publisherId AND " +
+            "a.visible = true " +
+            "ORDER BY a.createdDate DESC")
+    Page<ArticleEntity> filterByPublisher(@Param("title") String title,
+                                          @Param("regionId") Integer regionId,
+                                          @Param("status") ArticleStatus status,
+                                          @Param("publisherId") Integer publisherId,
+                                          Pageable pageable);
 
 }
