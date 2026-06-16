@@ -12,6 +12,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ArticleRepository extends CrudRepository<ArticleEntity, String> {
 
@@ -63,5 +64,6 @@ public interface ArticleRepository extends CrudRepository<ArticleEntity, String>
             "ORDER BY a.publishedDate DESC")
     Page<ArticleEntity> findByRegionId(@Param("regionId") Integer regionId, Pageable pageable);
 
+    Optional<ArticleEntity> findByIdAndVisibleTrue(String id);
 
 }

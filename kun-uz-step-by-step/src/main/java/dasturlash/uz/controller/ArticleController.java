@@ -1,6 +1,7 @@
 package dasturlash.uz.controller;
 
 import dasturlash.uz.dto.article.*;
+import dasturlash.uz.entity.ArticleEntity;
 import dasturlash.uz.enums.ArticleStatus;
 import dasturlash.uz.enums.ProfileStatus;
 import dasturlash.uz.service.ArticleService;
@@ -70,5 +71,13 @@ public class ArticleController {
         return ResponseEntity.ok(articleService.getByRegionId(regionId, page, size));
     }
 
+    // 9 Get by id and lang
+
+    @GetMapping("/{id}/{lang}")
+    public ResponseEntity<ArticleFullInfoDTO> getByIdAndLang(
+            @PathVariable("id") String id,
+            @PathVariable("lang") String lang){
+        return ResponseEntity.ok(articleService.getByIdAndLang(id, lang));
+    }
 
 }

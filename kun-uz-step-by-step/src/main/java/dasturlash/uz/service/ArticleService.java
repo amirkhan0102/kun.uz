@@ -2,12 +2,13 @@ package dasturlash.uz.service;
 
 import dasturlash.uz.dto.article.ArticleCreateDTO;
 import dasturlash.uz.dto.article.ArticleDTO;
+import dasturlash.uz.dto.article.ArticleFullInfoDTO;
 import dasturlash.uz.dto.article.ArticleShortInfoDTO;
 import dasturlash.uz.entity.ArticleEntity;
 import dasturlash.uz.enums.ArticleStatus;
 import dasturlash.uz.exceptions.AppBadException;
 import dasturlash.uz.mapper.ArticleShortInfo;
-import dasturlash.uz.repository.ArticleRepository;
+import dasturlash.uz.repository.*;
 import dasturlash.uz.util.SpringSecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -33,6 +34,20 @@ public class ArticleService {
 
     @Autowired
     private AttachService attachService;
+    @Autowired
+    private RegionRepository regionRepository;
+
+    @Autowired
+    private ArticleCategoryRepository articleCategoryRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
+
+    @Autowired
+    private ArticleSectionRepository articleSectionRepository;
+
+    @Autowired
+    private SectionRepository sectionRepository;
 
 
     public ArticleDTO create(ArticleCreateDTO createDTO) {
@@ -138,6 +153,60 @@ public class ArticleService {
         Pageable pageable = PageRequest.of(page,size);
         Page<ArticleEntity> articles=articleRepository.findByRegionId(regionId,pageable);
         return articles.map(this::toShortInfoDTO);
+    }
+
+
+    // 9 section Get by id and Language
+
+    public ArticleFullInfoDTO getByIdAndLang(String id, String lang) {
+        ArticleEntity article = articleRepository.findByIdAndVisibleTrue(id)
+                .orElseThrow(() -> new AppBadException("Article not found"));
+
+        ArticleFullInfoDTO dto = new ArticleFullInfoDTO();
+        dto.setId(article.getId());
+        dto.setTitle(article.getTitle());
+        dto.setDescription(article.getDescription());
+        dto.setContent(article.getContent());
+        dto.setImageId(article.getImageId());
+        dto.setReadTime(article.getReadTime());
+        dto.setViewCount(article.getViewCount());
+        dto.setSharedCount(article.getSharedCount());
+        dto.setPublishedDate(article.getPublishedDate());
+
+        // Region nomi
+        regionRepository.findById(article.getRegionId()).ifPresent(region -> {
+            switch (lang.toUpperCase()) {
+                case "UZ" -> dto.setRegionName(region.getNameUz());
+                case "RU" -> dto.setRegionName(region.getNameRu());
+                default -> dto.setRegionName(region.getNameEn());
+            }
+        });
+
+        // Category nomi — getCategoryIdListByArticleId
+        List<Integer> categoryIds = articleCategoryRepository.getCategoryIdListByArticleId(article.getId());
+        if (!categoryIds.isEmpty()) {
+            categoryRepository.findById(categoryIds.get(0)).ifPresent(category -> {
+                switch (lang.toUpperCase()) {
+                    case "UZ" -> dto.setCategoryName(category.getNameUz());
+                    case "RU" -> dto.setCategoryName(category.getNameRu());
+                    default -> dto.setCategoryName(category.getNameEn());
+                }
+            });
+        }
+
+        // Section nomi — getCategoryIdListByArticleId
+        List<Integer> sectionIds = articleSectionRepository.getCategoryIdListByArticleId(article.getId());
+        if (!sectionIds.isEmpty()) {
+            sectionRepository.findById(sectionIds.get(0)).ifPresent(section -> {
+                switch (lang.toUpperCase()) {
+                    case "UZ" -> dto.setSectionName(section.getNameUz());
+                    case "RU" -> dto.setSectionName(section.getNameRu());
+                    default -> dto.setSectionName(section.getNameEn());
+                }
+            });
+        }
+
+        return dto;
     }
 
     private void toEntity(ArticleCreateDTO dto, ArticleEntity entity) {
