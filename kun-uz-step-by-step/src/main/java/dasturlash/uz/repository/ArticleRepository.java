@@ -66,4 +66,17 @@ public interface ArticleRepository extends CrudRepository<ArticleEntity, String>
 
     Optional<ArticleEntity> findByIdAndVisibleTrue(String id);
 
+
+    @Query("SELECT a FROM ArticleEntity a " +
+            "JOIN ArticleSectionEntity as ON as.articleId = a.id " +
+            "WHERE as.sectionId = :sectionId " +
+            "AND a.id != :articleId " +
+            "AND a.visible = true AND a.status = 'PUBLISHED' " +
+            "ORDER BY a.publishedDate DESC")
+    List<ArticleEntity> findLast4BySectionIdExceptId(@Param("sectionId") Integer sectionId,
+                                                     @Param("articleId") String articleId,
+                                                     Pageable pageable);
+
+
+
 }

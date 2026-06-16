@@ -80,4 +80,14 @@ public class ArticleController {
         return ResponseEntity.ok(articleService.getByIdAndLang(id, lang));
     }
 
+
+
+
+    // 11. LAST 4 BY SECTION ID
+    @GetMapping("/last-4/{sectionId}/{articleId}")
+    public ResponseEntity<List<ArticleShortInfoDTO>> getLast4BySectionId(
+            @PathVariable("sectionId") Integer sectionId,
+            @PathVariable("articleId") String articleId) {
+        return ResponseEntity.ok(articleService.getLast4BySectionId(sectionId, articleId));
+    }
 }

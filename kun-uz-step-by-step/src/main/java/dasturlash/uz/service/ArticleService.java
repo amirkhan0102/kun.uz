@@ -209,6 +209,15 @@ public class ArticleService {
         return dto;
     }
 
+
+    // 11 section getlast 4 by section id
+    public List<ArticleShortInfoDTO> getLast4BySectionId(Integer sectionId, String articleId) {
+        Pageable pageable = PageRequest.of(0, 4);
+        List<ArticleEntity> list = articleRepository.findLast4BySectionIdExceptId(sectionId, articleId, pageable);
+        return list.stream().map(this::toShortInfoDTO).toList();
+    }
+
+
     private void toEntity(ArticleCreateDTO dto, ArticleEntity entity) {
         entity.setTitle(dto.getTitle());
         entity.setDescription(dto.getDescription());
