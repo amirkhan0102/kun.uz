@@ -10,6 +10,7 @@ import dasturlash.uz.mapper.ArticleShortInfo;
 import dasturlash.uz.repository.ArticleRepository;
 import dasturlash.uz.util.SpringSecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -101,7 +102,7 @@ public class ArticleService {
     }
 
 
-
+//6 section last 12 except given ids
     public List<ArticleShortInfoDTO> getLast12ExceptIds(List<String> ids) {
         if (ids == null || ids.isEmpty()) {
             ids = List.of("non-existing-id");
@@ -110,6 +111,14 @@ public class ArticleService {
         List<ArticleEntity> list = articleRepository.findLast12ExceptIds(ids, pageable);
         return list.stream().map(this::toShortInfoDTO).toList();
     }
+
+    // 7 section findbycategoryid
+    public Page<ArticleShortInfoDTO> getByCategoryId(Integer categoryId, int page, int size){
+        Pageable pageable = PageRequest.of(page,size);
+        Page<ArticleEntity> articles=articleRepository.findByCategoryId(categoryId,pageable);
+        return articles.map(this::toShortInfoDTO);
+    }
+
 
 
 
@@ -123,6 +132,13 @@ public class ArticleService {
         return dto;
     }
 
+    // 8 get by region Id
+
+    public Page<ArticleShortInfoDTO> getByRegionId(Integer regionId, int page, int size){
+        Pageable pageable = PageRequest.of(page,size);
+        Page<ArticleEntity> articles=articleRepository.findByRegionId(regionId,pageable);
+        return articles.map(this::toShortInfoDTO);
+    }
 
     private void toEntity(ArticleCreateDTO dto, ArticleEntity entity) {
         entity.setTitle(dto.getTitle());

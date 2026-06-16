@@ -86,3 +86,11 @@ Content-Type: application/json
 {
   "ids": ["5932316a-66bf-4246-b2ac-de85e98471b7","5932316a-66bf-4246-b2ac-de85e98471b7"]
 }
+
+
+### getByCategoryId
+GET localhost:8080/api/v1/article/by-category/1?page=0&size=10
+
+
+### GET BY REGIONID
+GET localhost:8080/api/v1/article/by-region/1?page=0&size=10

@@ -4,6 +4,7 @@ import dasturlash.uz.entity.ArticleEntity;
 import dasturlash.uz.enums.ArticleStatus;
 import dasturlash.uz.mapper.ArticleShortInfo;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -44,8 +45,23 @@ public interface ArticleRepository extends CrudRepository<ArticleEntity, String>
             " order by a.createdDate desc  limit ?2")
     List<ArticleShortInfo> getBySectionId(Integer sectionId, int limit);
 
-    @Query("select a from ArticleEntity a where a.id not in :ids " + "and a.visible=true and a.status='PUBLISHED' "+ "order by a.publishedDate desc")
+    @Query("select a from ArticleEntity a where a.id not in :ids " + "and a.visible=true and a.status='PUBLISHED' " + "order by a.publishedDate desc")
     List<ArticleEntity> findLast12ExceptIds(@Param("ids") List<String> ids, Pageable pageable);
+
+
+    @Query("SELECT a FROM ArticleEntity a " +
+            "JOIN ArticleCategoryEntity ac ON ac.articleId = a.id " +
+            "WHERE ac.categoryId = :categoryId " +
+            "AND a.visible=true AND a.status='PUBLISHED' " +
+            "ORDER BY a.publishedDate DESC")
+    Page<ArticleEntity> findByCategoryId(@Param("categoryId") Integer categoryId, Pageable pageable);
+
+
+    @Query("SELECT a FROM ArticleEntity a " +
+            "WHERE a.regionId = :regionId " +
+            "AND a.visible = true AND a.status = 'PUBLISHED' " +
+            "ORDER BY a.publishedDate DESC")
+    Page<ArticleEntity> findByRegionId(@Param("regionId") Integer regionId, Pageable pageable);
 
 
 }

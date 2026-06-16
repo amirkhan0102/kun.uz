@@ -7,6 +7,7 @@ import dasturlash.uz.service.ArticleService;
 import dasturlash.uz.service.ProfileService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -51,6 +52,22 @@ public class ArticleController {
     @PostMapping("/last-12")
     public ResponseEntity<List<ArticleShortInfoDTO>> getLast12ExceptIds(@RequestBody ArticleLast12ReqDTO dto){
         return ResponseEntity.ok(articleService.getLast12ExceptIds(dto.getIds()));
+    }
+
+    @GetMapping("/by-category/{categoryId}")
+    public ResponseEntity<Page<ArticleShortInfoDTO>> getByCategoryId(@PathVariable("categoryId") Integer categoryId,
+                                                                     @RequestParam(value = "page", defaultValue = "0") int page,
+                                                                     @RequestParam(value = "size", defaultValue = "10") int size) {
+        return ResponseEntity.ok(articleService.getByCategoryId(categoryId, page, size));
+    }
+
+    // 8 GET BY REGION ID
+    @GetMapping("/by-region/{regionId}")
+    public ResponseEntity<Page<ArticleShortInfoDTO>> getByRegionID(
+            @PathVariable("regionId") Integer regionId,
+            @RequestParam(value = "page", defaultValue ="0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size){
+        return ResponseEntity.ok(articleService.getByRegionId(regionId, page, size));
     }
 
 
