@@ -215,6 +215,14 @@ public class ArticleService {
         Pageable pageable = PageRequest.of(0, 4);
         List<ArticleEntity> list = articleRepository.findLast4BySectionIdExceptId(sectionId, articleId, pageable);
         return list.stream().map(this::toShortInfoDTO).toList();
+
+    }
+
+    // 12 find top 4 by viewcount
+    public List<ArticleShortInfoDTO> getMosrtRead(){
+        Pageable pageable = PageRequest.of(0, 4);
+        List<ArticleEntity> list=articleRepository.findTop4ByViewCount(pageable);
+        return list.stream().map(this::toShortInfoDTO).toList();
     }
 
 

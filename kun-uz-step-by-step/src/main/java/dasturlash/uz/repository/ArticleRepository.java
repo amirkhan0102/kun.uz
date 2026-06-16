@@ -78,5 +78,11 @@ public interface ArticleRepository extends CrudRepository<ArticleEntity, String>
                                                      Pageable pageable);
 
 
+    @Query("SELECT a FROM ArticleEntity a " +
+            "WHERE a.visible = true AND a.status = 'PUBLISHED' " +
+            "ORDER BY a.viewCount DESC")
+    List<ArticleEntity> findTop4ByViewCount(Pageable pageable);
+
+
 
 }

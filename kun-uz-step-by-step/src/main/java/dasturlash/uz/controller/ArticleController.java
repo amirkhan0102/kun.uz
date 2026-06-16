@@ -90,4 +90,16 @@ public class ArticleController {
             @PathVariable("articleId") String articleId) {
         return ResponseEntity.ok(articleService.getLast4BySectionId(sectionId, articleId));
     }
+
+
+    // 12 MOST READ TOP 4
+    @GetMapping("/most-read")
+    public ResponseEntity<List<ArticleShortInfoDTO>> getMostRead(){
+        return ResponseEntity.ok(articleService.getMosrtRead());
+    }
+
+
+
+
+
 }
