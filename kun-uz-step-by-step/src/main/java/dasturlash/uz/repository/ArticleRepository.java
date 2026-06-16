@@ -93,7 +93,7 @@ public interface ArticleRepository extends CrudRepository<ArticleEntity, String>
     // 14 increase share count
     @Modifying
     @Transactional
-    @Query("update ArticleEntity a set a.sharedCount = a.sharedCount + where a.id=:id")
+    @Query("update ArticleEntity a set a.sharedCount = a.sharedCount + 1 where a.id=:id")
     void increaseSharedCount(@Param("id") String id);
 
 
@@ -110,5 +110,40 @@ public interface ArticleRepository extends CrudRepository<ArticleEntity, String>
                                           @Param("status") ArticleStatus status,
                                           @Param("publisherId") Integer publisherId,
                                           Pageable pageable);
+
+
+
+
+
+    // 16
+    @Query("SELECT a FROM ArticleEntity a WHERE " +
+            "(:title IS NULL OR a.title LIKE %:title%) AND " +
+            "(:regionId IS NULL OR a.regionId = :regionId) AND " +
+            "(:status IS NULL OR a.status = :status) AND " +
+            "a.moderatorId = :moderatorId AND " +
+            "a.visible = true " +
+            "ORDER BY a.createdDate DESC")
+    Page<ArticleEntity> filterByModerator(@Param("title") String title,
+                                          @Param("regionId") Integer regionId,
+                                          @Param("status") ArticleStatus status,
+                                          @Param("moderatorId") Integer moderatorId,
+                                          Pageable pageable);
+
+
+
+    @Query("SELECT a FROM ArticleEntity a WHERE " +
+            "(:title IS NULL OR a.title LIKE %:title%) AND " +
+            "(:regionId IS NULL OR a.regionId = :regionId) AND " +
+            "(:status IS NULL OR a.status = :status) AND " +
+            "(:publisherId IS NULL OR a.publisherId = :publisherId) AND " +
+            "(:moderatorId IS NULL OR a.moderatorId = :moderatorId) AND " +
+            "a.visible = true " +
+            "ORDER BY a.createdDate DESC")
+    Page<ArticleEntity> filterByAdmin(@Param("title") String title,
+                                      @Param("regionId") Integer regionId,
+                                      @Param("status") ArticleStatus status,
+                                      @Param("publisherId") Integer publisherId,
+                                      @Param("moderatorId") Integer moderatorId,
+                                      Pageable pageable);
 
 }

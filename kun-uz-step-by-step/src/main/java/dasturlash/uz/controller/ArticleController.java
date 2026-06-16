@@ -2,6 +2,7 @@ package dasturlash.uz.controller;
 
 import dasturlash.uz.dto.article.*;
 import dasturlash.uz.entity.ArticleEntity;
+import dasturlash.uz.entity.ProfileEntity;
 import dasturlash.uz.enums.ArticleStatus;
 import dasturlash.uz.enums.ProfileStatus;
 import dasturlash.uz.service.ArticleService;
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -116,7 +119,6 @@ public class ArticleController {
 
 
     // 15 filter By Publisher
-    // 15. FILTER BY PUBLISHER
     @PreAuthorize("hasRole('PUBLISHER')")
     @PostMapping("/filter/publisher")
     public ResponseEntity<Page<ArticleShortInfoDTO>> filterByPublisher(
@@ -127,6 +129,38 @@ public class ArticleController {
         return ResponseEntity.ok(articleService.filterByPublisher(dto, publisherId, page, size));
     }
 
+
+    // 16. FILTER BY MODERATOR
+    @PreAuthorize("hasRole('MODERATOR')")
+    @PostMapping("/filter/moderator")
+    public ResponseEntity<Page<ArticleShortInfoDTO>> filterByModerator(
+            @RequestBody ArticleFilterDTO dto,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Integer moderatorId = getCurrentProfileId();
+        return ResponseEntity.ok(articleService.filterByModerator(dto, moderatorId, page, size));
+    }
+
+
+
+
+    // 17. FILTER BY ADMIN
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/filter/admin")
+    public ResponseEntity<Page<ArticleShortInfoDTO>> filterByAdmin(
+            @RequestBody ArticleFilterDTO dto,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        return ResponseEntity.ok(articleService.filterByAdmin(dto, page, size));
+    }
+
+
+
+    private Integer getCurrentProfileId() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        ProfileEntity profile = (ProfileEntity) auth.getPrincipal();
+        return profile.getId();
+    }
 
 
 

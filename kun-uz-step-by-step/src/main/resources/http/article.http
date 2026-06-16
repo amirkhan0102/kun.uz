@@ -1,15 +1,15 @@
 ### Article create
 POST localhost:8080/api/v1/article/moderator
 Content-Type: application/json
-Authorization:  Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfQURNSU4iXSwidXNlcm5hbWUiOiJlc2htYXQ1QGdtYWlsLmNvbSIsInN1YiI6ImVzaG1hdDVAZ21haWwuY29tIiwiaWF0IjoxNzgxNDk5MjczLCJleHAiOjE3ODE1ODU2NzN9.gJfI8xp5AuiV3xfwL0yExlySLQtmSQSDmvfpE52VPvwWOSL72yieXdNdXPG8rpAh31odZdJnpOUqroWVcL7o4g
+Authorization:  Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6ImphdnFvY2hkaXlldkBnbWFpbC5jb20iLCJzdWIiOiJqYXZxb2NoZGl5ZXZAZ21haWwuY29tIiwiaWF0IjoxNzgxNjExMzMzLCJleHAiOjE3ODE2OTc3MzN9.I6UxdvnVNtfG99qHQyFV5Ay5SxtEGkBkKDU95MVEOCnS9qcBKWW6mPyRFTHobtXbjUhg1gUGTeZyNx8oZhXW-w
 
 {
-  "title": "Article title 2",
-  "description": "Article 2 description",
-  "content": "Article 2 content",
+  "title": "sport news",
+  "description": "sport news description",
+  "content": "sport news content",
   "imageId": "216c05c8-5b66-481b-a163-c54057ad5f97.jpg",
-  "regionId": 2,
-  "readTime": 60,
+  "regionId": 5,
+  "readTime": 120,
   "categoryList": [
     {
       "id": 1
@@ -62,13 +62,13 @@ Authorization:  Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfQURNSU4iXSwidXNl
 
 
 ### Article update
-DELETE localhost:8080/api/v1/article/moderator/744634f8-42fb-4925-9827-85b726fe1a97
-Authorization:  Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfQURNSU4iXSwidXNlcm5hbWUiOiJlc2htYXQ1QGdtYWlsLmNvbSIsInN1YiI6ImVzaG1hdDVAZ21haWwuY29tIiwiaWF0IjoxNzgxNDk5MjczLCJleHAiOjE3ODE1ODU2NzN9.gJfI8xp5AuiV3xfwL0yExlySLQtmSQSDmvfpE52VPvwWOSL72yieXdNdXPG8rpAh31odZdJnpOUqroWVcL7o4g
+DELETE localhost:8080/api/v1/article/moderator/3b0b873b-e402-4027-8d96-9d9b24add56b
+Authorization:  Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6ImphdnFvY2hkaXlldkBnbWFpbC5jb20iLCJzdWIiOiJqYXZxb2NoZGl5ZXZAZ21haWwuY29tIiwiaWF0IjoxNzgxNjExMzMzLCJleHAiOjE3ODE2OTc3MzN9.I6UxdvnVNtfG99qHQyFV5Ay5SxtEGkBkKDU95MVEOCnS9qcBKWW6mPyRFTHobtXbjUhg1gUGTeZyNx8oZhXW-w
 
 
 ### Article change status
-PUT localhost:8080/api/v1/article/moderator/744634f8-42fb-4925-9827-85b726fe1a97/status
-Authorization:  Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfQURNSU4iXSwidXNlcm5hbWUiOiJlc2htYXQ1QGdtYWlsLmNvbSIsInN1YiI6ImVzaG1hdDVAZ21haWwuY29tIiwiaWF0IjoxNzgxNTE0Njk0LCJleHAiOjE3ODE2MDEwOTR9.ndhWSgU52Q8RfWLXPxfbTqAzTgC6r7v4XrPeYxGuUsex1wMhevuKQNrthGsRfHTIAd5jZwCqLArsxK3cv7rs0A
+PUT localhost:8080/api/v1/article/moderator/3b0b873b-e402-4027-8d96-9d9b24add56b/status
+Authorization:  Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6ImphdnFvY2hkaXlldkBnbWFpbC5jb20iLCJzdWIiOiJqYXZxb2NoZGl5ZXZAZ21haWwuY29tIiwiaWF0IjoxNzgxNjExMzMzLCJleHAiOjE3ODE2OTc3MzN9.I6UxdvnVNtfG99qHQyFV5Ay5SxtEGkBkKDU95MVEOCnS9qcBKWW6mPyRFTHobtXbjUhg1gUGTeZyNx8oZhXW-w
 Content-Type:  application/json
 
 {
@@ -104,14 +104,14 @@ GET localhost:8080/api/v1/article/{articleId}/en
 
 
 ### API 11 Last 4 by sectionId except articleId
-GET localhost:8080/api/v1/article/last-4/1/744634f8-42fb-4925-9827-85b726fe1a97
+GET localhost:8080/api/v1/article/last-4/1/3b0b873b-e402-4027-8d96-9d9b24add56b
 
 
 ### API 12 - Most Read 4
 GET localhost:8080/api/v1/article/most-read
 
 ### API 13 - Increase View Count
-PUT localhost:8080/api/v1/article/view/744634f8-42fb-4925-9827-85b726fe1a97
+PUT localhost:8080/api/v1/article/view/3b0b873b-e402-4027-8d96-9d9b24add56b
 
 
 ### API 14 - Increase Share Count
@@ -121,6 +121,20 @@ PUT localhost:8080/api/v1/article/share/744634f8-42fb-4925-9827-85b726fe1a97
 ### API 15 - Filter by Publisher
 POST localhost:8080/api/v1/article/filter/publisher?page=0&size=10
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfQURNSU4iXSwidXNlcm5hbWUiOiJlc2htYXQ1QGdtYWlsLmNvbSIsInN1YiI6ImVzaG1hdDVAZ21haWwuY29tIiwiaWF0IjoxNzgxNjExMTIzLCJleHAiOjE3ODE2OTc1MjN9.8ayaDB2mx_j-vqNc4pV4FvrrAt0w84gbAQJAOcfmhEDNgpuP53bULgBN8rnakap17j1o-ftqtt74Vbv15P43IA
+
+{
+  "title": null,
+  "categoryId": null,
+  "regionId": null,
+  "status": null
+}
+
+
+
+### API 16 - Filter by Moderator
+POST localhost:8080/api/v1/article/filter/moderator?page=0&size=10
+Content-Type: application/json
 Authorization: Bearer {{jwt}}
 
 {
@@ -128,4 +142,18 @@ Authorization: Bearer {{jwt}}
   "categoryId": null,
   "regionId": null,
   "status": null
+}
+
+### API 17 - Filter by Admin
+POST localhost:8080/api/v1/article/filter/admin?page=0&size=10
+Content-Type: application/json
+Authorization: Bearer {{jwt}}
+
+{
+  "title": null,
+  "categoryId": null,
+  "regionId": null,
+  "status": null,
+  "publisherId": null,
+  "moderatorId": null
 }

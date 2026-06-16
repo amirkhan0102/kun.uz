@@ -244,6 +244,29 @@ public class ArticleService {
     }
 
 
+    // 16
+    public Page<ArticleShortInfoDTO> filterByModerator(ArticleFilterDTO dto,
+                                                       Integer moderatorId,
+                                                       int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<ArticleEntity> articles = articleRepository.filterByModerator(
+                dto.getTitle(), dto.getRegionId(), dto.getStatus(), moderatorId, pageable);
+        return articles.map(this::toShortInfoDTO);
+    }
+
+
+
+    public Page<ArticleShortInfoDTO> filterByAdmin(ArticleFilterDTO dto, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<ArticleEntity> articles = articleRepository.filterByAdmin(
+                dto.getTitle(), dto.getRegionId(), dto.getStatus(),
+                dto.getPublisherId(), dto.getModeratorId(), pageable);
+        return articles.map(this::toShortInfoDTO);
+    }
+
+
+
+
     private void toEntity(ArticleCreateDTO dto, ArticleEntity entity) {
         entity.setTitle(dto.getTitle());
         entity.setDescription(dto.getDescription());
