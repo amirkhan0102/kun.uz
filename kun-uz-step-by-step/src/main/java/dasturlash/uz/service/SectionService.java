@@ -18,10 +18,10 @@ import java.util.Optional;
 public class SectionService {
 
     @Autowired
-    private SectionRepository regionRepository;
+    private SectionRepository sectionRepository;
 
     public SectionDTO create(SectionDTO dto) {
-        Optional<SectionEntity> optional = regionRepository.findBySectionKey(dto.getSectionKey());
+        Optional<SectionEntity> optional = sectionRepository.findBySectionKey(dto.getSectionKey());
         if (optional.isPresent()) {
             throw new AppBadException("Section key already exist");
         }
@@ -33,7 +33,7 @@ public class SectionService {
         entity.setSectionKey(dto.getSectionKey());
         entity.setVisible(Boolean.TRUE);
         entity.setCreatedDate(LocalDateTime.now());
-        regionRepository.save(entity);
+        sectionRepository.save(entity);
         // response
         dto.setId(entity.getId());
         dto.setCreatedDate(entity.getCreatedDate());
@@ -41,11 +41,11 @@ public class SectionService {
     }
 
     public SectionDTO update(Integer id, SectionDTO newDto) {// Jahon
-        Optional<SectionEntity> optional = regionRepository.findByIdAndVisibleIsTrue(id);
+        Optional<SectionEntity> optional = sectionRepository.findByIdAndVisibleIsTrue(id);
         if (optional.isEmpty()) {
             throw new AppBadException("Section not found");
         }
-        Optional<SectionEntity> keyOptional = regionRepository.findBySectionKey(newDto.getSectionKey()); // Jahon
+        Optional<SectionEntity> keyOptional = sectionRepository.findBySectionKey(newDto.getSectionKey()); // Jahon
         if (keyOptional.isPresent() && !id.equals(keyOptional.get().getId())) {
             throw new AppBadException("Section present");
         }
@@ -56,25 +56,38 @@ public class SectionService {
         entity.setNameRu(newDto.getNameRu());
         entity.setNameEn(newDto.getNameEn());
         entity.setSectionKey(newDto.getSectionKey());
-        regionRepository.save(entity);
+        sectionRepository.save(entity);
 
         newDto.setId(entity.getId());
         return newDto;
     }
 
     public Boolean delete(Integer id) {
-        return regionRepository.updateVisibleById(id) == 1;
+        return sectionRepository.updateVisibleById(id) == 1;
     }
 
     public List<SectionDTO> getAll() {
-        Iterable<SectionEntity> iterable = regionRepository.findAll();
+        Iterable<SectionEntity> iterable = sectionRepository.findAll();
         List<SectionDTO> dtos = new LinkedList<>();
         iterable.forEach(entity -> dtos.add(toDto(entity)));
         return dtos;
     }
 
     public List<SectionDTO> getAllByLang(AppLanguageEnum lang) {
-        Iterable<SectionMapper> iterable = regionRepository.getByLang(lang.name());
+        Iterable<SectionMapper> iterable = sectionRepository.getByLang(lang.name());
+        List<SectionDTO> dtoList = new LinkedList<>();
+        iterable.forEach(mapper -> {
+            SectionDTO dto = new SectionDTO();
+            dto.setId(mapper.getId());
+            dto.setName(mapper.getName());
+            dto.setSectionKey(mapper.getSectionKey());
+            dtoList.add(dto);
+        });
+        return dtoList;
+    }
+
+    public List<SectionDTO> getSectionListByArticleIdAndLang(String articleId, AppLanguageEnum lang) {
+        List<SectionMapper> iterable = sectionRepository.getSectionListByArticleIdAndLang(articleId, lang.name());
         List<SectionDTO> dtoList = new LinkedList<>();
         iterable.forEach(mapper -> {
             SectionDTO dto = new SectionDTO();
@@ -117,7 +130,7 @@ public class SectionService {
     }
 
     public SectionEntity get(Integer id) {
-        return regionRepository.findById(id).orElseThrow(() -> {
+        return sectionRepository.findById(id).orElseThrow(() -> {
             throw new AppBadException("Item not found");
         });
     }

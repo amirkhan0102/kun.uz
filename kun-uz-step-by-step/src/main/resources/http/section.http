@@ -1,39 +1,39 @@
 ### Create section
 POST localhost:8080/api/v1/section/admin
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfQURNSU4iXSwidXNlcm5hbWUiOiJlc2htYXQ1QGdtYWlsLmNvbSIsInN1YiI6ImVzaG1hdDVAZ21haWwuY29tIiwiaWF0IjoxNzgxNDk5MjczLCJleHAiOjE3ODE1ODU2NzN9.gJfI8xp5AuiV3xfwL0yExlySLQtmSQSDmvfpE52VPvwWOSL72yieXdNdXPG8rpAh31odZdJnpOUqroWVcL7o4g
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiIsIlJPTEVfQURNSU4iXSwidXNlcm5hbWUiOiJiaWdtYW5nY29tQGdtYWlsLmNvbSIsInN1YiI6ImJpZ21hbmdjb21AZ21haWwuY29tIiwiaWF0IjoxNzUwMzAyODkxLCJleHAiOjE3NTAzODkyOTF9.jiApspABtlGP2x8zYvQkRnqqvl16o2VOIv_p6-8-Z9eQb0R5DsN3sjpWTADpijxEK0FvTVhWFe7iRRV9N9CwAA
 
 {
-  "orderNumber": 1,
-  "nameUz": "Asosiy 1",
-  "nameRu": "Основной 1",
-  "nameEn": "Main 1",
-  "sectionKey": "main1"
+  "orderNumber": 4,
+  "nameUz": "Asosiy 4",
+  "nameRu": "Основной 4",
+  "nameEn": "Main 4",
+  "sectionKey": "main4"
 }
 
 
 ### Update section
 PUT localhost:8080/api/v1/section/admin/1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfQURNSU4iXSwidXNlcm5hbWUiOiJlc2htYXQ1QGdtYWlsLmNvbSIsInN1YiI6ImVzaG1hdDVAZ21haWwuY29tIiwiaWF0IjoxNzgxNDk5MjczLCJleHAiOjE3ODE1ODU2NzN9.gJfI8xp5AuiV3xfwL0yExlySLQtmSQSDmvfpE52VPvwWOSL72yieXdNdXPG8rpAh31odZdJnpOUqroWVcL7o4g
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiIsIlJPTEVfQURNSU4iXSwidXNlcm5hbWUiOiJiaWdtYW5nY29tQGdtYWlsLmNvbSIsInN1YiI6ImJpZ21hbmdjb21AZ21haWwuY29tIiwiaWF0IjoxNzUwMzAyODkxLCJleHAiOjE3NTAzODkyOTF9.jiApspABtlGP2x8zYvQkRnqqvl16o2VOIv_p6-8-Z9eQb0R5DsN3sjpWTADpijxEK0FvTVhWFe7iRRV9N9CwAA
 
 {
   "orderNumber": 1,
-  "nameUz": "Asosiy 12",
-  "nameRu": "Основной 12",
-  "nameEn": "Main 12",
-  "sectionKey": "main12"
+  "nameUz": "Asosiy 11",
+  "nameRu": "Основной 11",
+  "nameEn": "Main 11",
+  "sectionKey": "main1"
 }
 
 
 ### Delete category
-DELETE localhost:8080/api/v1/section/admin/4
-Authorization: Bearer  eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfQURNSU4iXSwidXNlcm5hbWUiOiJlc2htYXQ1QGdtYWlsLmNvbSIsInN1YiI6ImVzaG1hdDVAZ21haWwuY29tIiwiaWF0IjoxNzgxNDk5MjczLCJleHAiOjE3ODE1ODU2NzN9.gJfI8xp5AuiV3xfwL0yExlySLQtmSQSDmvfpE52VPvwWOSL72yieXdNdXPG8rpAh31odZdJnpOUqroWVcL7o4g
+DELETE localhost:8080/api/v1/section/admin/3
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiIsIlJPTEVfQURNSU4iXSwidXNlcm5hbWUiOiJiaWdtYW5nY29tQGdtYWlsLmNvbSIsInN1YiI6ImJpZ21hbmdjb21AZ21haWwuY29tIiwiaWF0IjoxNzUwMzAyODkxLCJleHAiOjE3NTAzODkyOTF9.jiApspABtlGP2x8zYvQkRnqqvl16o2VOIv_p6-8-Z9eQb0R5DsN3sjpWTADpijxEK0FvTVhWFe7iRRV9N9CwAA
 
 
 ### Get region list
 GET localhost:8080/api/v1/section/admin
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfQURNSU4iXSwidXNlcm5hbWUiOiJlc2htYXQ1QGdtYWlsLmNvbSIsInN1YiI6ImVzaG1hdDVAZ21haWwuY29tIiwiaWF0IjoxNzgxNDk5MjczLCJleHAiOjE3ODE1ODU2NzN9.gJfI8xp5AuiV3xfwL0yExlySLQtmSQSDmvfpE52VPvwWOSL72yieXdNdXPG8rpAh31odZdJnpOUqroWVcL7o4g
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiIsIlJPTEVfQURNSU4iXSwidXNlcm5hbWUiOiJiaWdtYW5nY29tQGdtYWlsLmNvbSIsInN1YiI6ImJpZ21hbmdjb21AZ21haWwuY29tIiwiaWF0IjoxNzUwMzAyODkxLCJleHAiOjE3NTAzODkyOTF9.jiApspABtlGP2x8zYvQkRnqqvl16o2VOIv_p6-8-Z9eQb0R5DsN3sjpWTADpijxEK0FvTVhWFe7iRRV9N9CwAA
 
 
 ### Get section by lang

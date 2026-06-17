@@ -86,6 +86,21 @@ public class RegionService {
         return dtoList;
     }
 
+    public RegionDTO getByIdAndLang(Integer id, AppLanguageEnum lang) {
+        Optional<RegionMapper> regionOp = regionRepository.getByIdAndLang(id, lang.name());
+        if (regionOp.isEmpty()) {
+            return null;
+        }
+        return regionOp.map(mapper -> {
+            RegionDTO dto = new RegionDTO();
+            dto.setId(mapper.getId());
+            dto.setName(mapper.getName());
+            dto.setRegionKey(mapper.getRegionKey());
+            return dto;
+        }).get();
+    }
+
+
     private RegionDTO toDto(RegionEntity entity) {
         RegionDTO dto = new RegionDTO();
         dto.setId(entity.getId());

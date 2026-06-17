@@ -3,6 +3,7 @@ package dasturlash.uz.dto.article;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import dasturlash.uz.dto.AttachDTO;
 import dasturlash.uz.dto.CategoryDTO;
+import dasturlash.uz.dto.RegionDTO;
 import dasturlash.uz.dto.SectionDTO;
 import dasturlash.uz.enums.ArticleStatus;
 import lombok.Getter;
@@ -23,7 +24,9 @@ public class ArticleDTO {
 
     private String imageId;
     private AttachDTO image;
+
     private Integer regionId;
+    private RegionDTO region;
 
     private Integer moderatorId;
     private Integer publisherId;
@@ -31,8 +34,10 @@ public class ArticleDTO {
     private ArticleStatus status;
 
     private Integer readTime; // in second
-    private Integer viewCount; // in second
+    private Integer viewCount;
+    private Long likeCount;
     private LocalDateTime publishedDate;
+    private LocalDateTime createdDate;
     private List<CategoryDTO> categoryList;
     private List<SectionDTO> sectionList;
 }

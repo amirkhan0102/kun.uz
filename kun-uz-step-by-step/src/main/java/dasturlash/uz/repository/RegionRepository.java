@@ -52,5 +52,16 @@ public interface RegionRepository extends CrudRepository<RegionEntity, Integer> 
             "WHERE c.visible = true order by orderNumber asc")
     List<RegionMapper> getByLang(@Param("lang") String lang);
 
+    @Query("SELECT c.id AS id, " +
+            "CASE :lang " +
+            "   WHEN 'UZ' THEN c.nameUz " +
+            "   WHEN 'RU' THEN c.nameRu " +
+            "   WHEN 'EN' THEN c.nameEn " +
+            "END AS name, " +
+            "c.regionKey AS regionKey " +
+            "FROM RegionEntity c " +
+            "WHERE c.visible = true and c.id = :id")
+    Optional<RegionMapper> getByIdAndLang(@Param("id") Integer id, @Param("lang") String lang);
+
     Optional<RegionEntity> findByRegionKey(String key);
 }

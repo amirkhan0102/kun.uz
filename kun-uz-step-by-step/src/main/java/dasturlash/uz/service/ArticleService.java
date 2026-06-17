@@ -1,18 +1,24 @@
 package dasturlash.uz.service;
 
-import dasturlash.uz.dto.article.*;
+import dasturlash.uz.dto.FilterResultDTO;
+import dasturlash.uz.dto.article.ArticleAdminFilterDTO;
+import dasturlash.uz.dto.article.ArticleCreateDTO;
+import dasturlash.uz.dto.article.ArticleDTO;
+import dasturlash.uz.dto.article.ArticleFilterDTO;
 import dasturlash.uz.entity.ArticleEntity;
+import dasturlash.uz.enums.AppLanguageEnum;
 import dasturlash.uz.enums.ArticleStatus;
 import dasturlash.uz.exceptions.AppBadException;
 import dasturlash.uz.mapper.ArticleShortInfo;
-import dasturlash.uz.repository.*;
+import dasturlash.uz.repository.ArticleCustomRepository;
+import dasturlash.uz.repository.ArticleRepository;
 import dasturlash.uz.util.SpringSecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 
 import java.time.LocalDateTime;
 import java.util.LinkedList;
@@ -28,27 +34,23 @@ public class ArticleService {
 
     @Autowired
     private ArticleSectionService articleSectionService;
+    @Autowired
+    private SectionService sectionService;
 
     @Autowired
     private AttachService attachService;
     @Autowired
-    private RegionRepository regionRepository;
+    private RegionService regionService;
+    @Autowired
+    private CategoryService categoryService;
 
     @Autowired
-    private ArticleCategoryRepository articleCategoryRepository;
-
-    @Autowired
-    private CategoryRepository categoryRepository;
-
-    @Autowired
-    private ArticleSectionRepository articleSectionRepository;
-
-    @Autowired
-    private SectionRepository sectionRepository;
+    private ArticleCustomRepository articleCustomRepository;
 
 
+    // 1
     public ArticleDTO create(ArticleCreateDTO createDTO) {
-        ArticleEntity entity = new ArticleEntity(); // entity -> abc
+        ArticleEntity entity = new ArticleEntity();
         toEntity(createDTO, entity);
         // Set default values
         entity.setStatus(ArticleStatus.NOT_PUBLISHED);
@@ -67,6 +69,7 @@ public class ArticleService {
         return toDTO(entity);
     }
 
+    // 2
     public ArticleDTO update(String articleId, ArticleCreateDTO createDTO) {
         ArticleEntity entity = get(articleId);
         toEntity(createDTO, entity);
@@ -80,6 +83,7 @@ public class ArticleService {
         return toDTO(entity);
     }
 
+    // 3
     public String delete(String articleId) {
         int effectedRows = articleRepository.delete(articleId);
         if (effectedRows > 0) {
@@ -93,6 +97,7 @@ public class ArticleService {
 //        return "Article deleted";
     }
 
+    // 4
     public String changeStatus(String articleId, ArticleStatus status) {
         int effectedRows = articleRepository.changeStatus(articleId, status);
         if (effectedRows > 0) {
@@ -106,166 +111,125 @@ public class ArticleService {
 //        return "Article status changed";
     }
 
-    public List<ArticleDTO> getBySectionId(Integer sectionId, int limit) {
+    // 5 -
+    public List<ArticleDTO> getBySectionId(Integer sectionId, int limit) { // 1, 100
         List<ArticleShortInfo> resultList = articleRepository.getBySectionId(sectionId, limit);
         List<ArticleDTO> responseList = new LinkedList<>();
         resultList.forEach(mapper -> responseList.add(toDTO(mapper)));
         return responseList;
     }
 
-
-//6 section last 12 except given ids
-    public List<ArticleShortInfoDTO> getLast12ExceptIds(List<String> ids) {
-        if (ids == null || ids.isEmpty()) {
-            ids = List.of("non-existing-id");
-        }
-        Pageable pageable = PageRequest.of(0, 12);
-        List<ArticleEntity> list = articleRepository.findLast12ExceptIds(ids, pageable);
-        return list.stream().map(this::toShortInfoDTO).toList();
+    //  6
+    public List<ArticleDTO> getLast12ArticleExcept(List<String> exceptIdList) { // 1, 100
+        List<ArticleShortInfo> resultList = articleRepository.getLastArticleListExceptGiven(exceptIdList);
+        List<ArticleDTO> responseList = new LinkedList<>();
+        resultList.forEach(mapper -> responseList.add(toDTO(mapper)));
+        return responseList;
     }
 
-    // 7 section findbycategoryid
-    public Page<ArticleShortInfoDTO> getByCategoryId(Integer categoryId, int page, int size){
-        Pageable pageable = PageRequest.of(page,size);
-        Page<ArticleEntity> articles=articleRepository.findByCategoryId(categoryId,pageable);
-        return articles.map(this::toShortInfoDTO);
+    // 7
+    public List<ArticleDTO> getLastNArticleByCategoryId(Integer categoryId, int limit) {
+        List<ArticleShortInfo> resultList = articleRepository.getLastNByCategoryId(categoryId, limit);
+        List<ArticleDTO> responseList = new LinkedList<>();
+        resultList.forEach(mapper -> responseList.add(toDTO(mapper)));
+        return responseList;
     }
 
-
-
-
-    private ArticleShortInfoDTO toShortInfoDTO(ArticleEntity article) {
-        ArticleShortInfoDTO dto = new ArticleShortInfoDTO();
-        dto.setId(article.getId());
-        dto.setTitle(article.getTitle());
-        dto.setDescription(article.getDescription());
-        dto.setImageId(article.getImageId());
-        dto.setPublishedDate(article.getPublishedDate());
-        return dto;
+    // 8
+    public List<ArticleDTO> getLastNArticleByRegionId(Integer regionId, Integer limit) {
+        List<ArticleShortInfo> resultList = articleRepository.getLastNByRegionId(regionId, limit);
+        List<ArticleDTO> responseList = new LinkedList<>();
+        resultList.forEach(mapper -> responseList.add(toDTO(mapper)));
+        return responseList;
     }
 
-    // 8 get by region Id
-
-    public Page<ArticleShortInfoDTO> getByRegionId(Integer regionId, int page, int size){
-        Pageable pageable = PageRequest.of(page,size);
-        Page<ArticleEntity> articles=articleRepository.findByRegionId(regionId,pageable);
-        return articles.map(this::toShortInfoDTO);
+    //   12. Get 4 most read articles, except given article id .
+    public List<ArticleDTO> getMostRead4ArticleExceptGivenId(String exceptArticleId) {
+        List<ArticleShortInfo> resultList = articleRepository.mostRead4Article(exceptArticleId);
+        List<ArticleDTO> responseList = new LinkedList<>();
+        resultList.forEach(mapper -> responseList.add(toDTO(mapper)));
+        return responseList;
     }
 
+    //  13. Increase Article View Count by Article Id
+    public Boolean increaseViewCount(String articleId) {
+        // Qaysi IP orqali view qilinganini yozib qo'ysak yaxshi bo'lar edi, Shu IP dan shu maqolani o'qishdi deb.
+        articleRepository.increaseViewCount(articleId);
+        return Boolean.TRUE;
+    }
 
-    // 9 section Get by id and Language
+    //  14. Increase Article Shared Count by Article Id
+    public Integer increaseSharedCount(String articleId) {
+        int sharedCount = articleRepository.incrementSharedCountAndGet(articleId);
+        return sharedCount;
+    }
 
-    public ArticleFullInfoDTO getByIdAndLang(String id, String lang) {
-        ArticleEntity article = articleRepository.findByIdAndVisibleTrue(id)
-                .orElseThrow(() -> new AppBadException("Article not found"));
-
-        ArticleFullInfoDTO dto = new ArticleFullInfoDTO();
-        dto.setId(article.getId());
-        dto.setTitle(article.getTitle());
-        dto.setDescription(article.getDescription());
-        dto.setContent(article.getContent());
-        dto.setImageId(article.getImageId());
-        dto.setReadTime(article.getReadTime());
-        dto.setViewCount(article.getViewCount());
-        dto.setSharedCount(article.getSharedCount());
-        dto.setPublishedDate(article.getPublishedDate());
-
-        // Region nomi
-        regionRepository.findById(article.getRegionId()).ifPresent(region -> {
-            switch (lang.toUpperCase()) {
-                case "UZ" -> dto.setRegionName(region.getNameUz());
-                case "RU" -> dto.setRegionName(region.getNameRu());
-                default -> dto.setRegionName(region.getNameEn());
+    // 15
+    public Page<ArticleDTO> filter(ArticleFilterDTO filter, int page, int size, Boolean isModerator) { // 1, 100
+        FilterResultDTO<Object[]> filterResult = articleCustomRepository.filter(filter, page, size, isModerator);
+        List<ArticleDTO> articleList = new LinkedList<>();
+        for (Object[] obj : filterResult.getContent()) {
+            ArticleDTO article = new ArticleDTO();
+            // a.id, a.title, a.description, a.publishedDate,a.imageId
+            article.setId((String) obj[0]);
+            article.setTitle((String) obj[1]);
+            article.setDescription((String) obj[2]);
+            article.setPublishedDate((LocalDateTime) obj[3]);
+            if (obj[4] != null) {
+                article.setImage(attachService.openDTO((String) obj[4]));
             }
-        });
-
-        // Category nomi — getCategoryIdListByArticleId
-        List<Integer> categoryIds = articleCategoryRepository.getCategoryIdListByArticleId(article.getId());
-        if (!categoryIds.isEmpty()) {
-            categoryRepository.findById(categoryIds.get(0)).ifPresent(category -> {
-                switch (lang.toUpperCase()) {
-                    case "UZ" -> dto.setCategoryName(category.getNameUz());
-                    case "RU" -> dto.setCategoryName(category.getNameRu());
-                    default -> dto.setCategoryName(category.getNameEn());
-                }
-            });
+            articleList.add(article);
         }
+        return new PageImpl<>(articleList, PageRequest.of(page, size), filterResult.getTotal());
+    }
 
-        // Section nomi — getCategoryIdListByArticleId
-        List<Integer> sectionIds = articleSectionRepository.getCategoryIdListByArticleId(article.getId());
-        if (!sectionIds.isEmpty()) {
-            sectionRepository.findById(sectionIds.get(0)).ifPresent(section -> {
-                switch (lang.toUpperCase()) {
-                    case "UZ" -> dto.setSectionName(section.getNameUz());
-                    case "RU" -> dto.setSectionName(section.getNameRu());
-                    default -> dto.setSectionName(section.getNameEn());
-                }
-            });
+    // 17 filter as admin
+    public Page<ArticleDTO> filterAsAdmin(ArticleAdminFilterDTO filter, int page, int size) { // 1, 100
+        FilterResultDTO<Object[]> filterResult = articleCustomRepository.filterAsAdmin(filter, page, size);
+        List<ArticleDTO> articleList = new LinkedList<>();
+        for (Object[] obj : filterResult.getContent()) {
+            ArticleDTO article = new ArticleDTO();
+            // a.id, a.title, a.description, a.publishedDate,a.imageId
+            article.setId((String) obj[0]);
+            article.setTitle((String) obj[1]);
+            article.setDescription((String) obj[2]);
+            article.setCreatedDate((LocalDateTime) obj[3]);
+            article.setPublishedDate((LocalDateTime) obj[4]);
+            if (obj[5] != null) {
+                article.setImage(attachService.openDTO((String) obj[5]));
+            }
+            if (obj[6] != null) {
+                article.setStatus((ArticleStatus) obj[6]);
+            }
+            articleList.add(article);
         }
+        return new PageImpl<>(articleList, PageRequest.of(page, size), filterResult.getTotal());
+    }
 
+    public ArticleDTO getById(String id, AppLanguageEnum lang) {
+        // get
+        ArticleEntity entity = get(id);
+
+        ArticleDTO dto = new ArticleDTO();
+        dto.setId(entity.getId());
+        dto.setTitle(entity.getTitle());
+        dto.setDescription(entity.getDescription());
+        dto.setContent(entity.getContent());
+        dto.setSharedCount(entity.getSharedCount());
+        dto.setReadTime(entity.getReadTime());
+        dto.setViewCount(entity.getViewCount());
+        dto.setPublishedDate(entity.getPublishedDate());
+//        dto.setLikeCount(entity.getLikeCount());
+        // articleLikeService.getArticleLikeCount(entity.getId()); select count(*) from article_lik where article_id = ? and emotion = 'KILE';
+        // set region
+        dto.setRegion(regionService.getByIdAndLang(entity.getRegionId(), lang));
+        // set section   ->  1 -N
+        dto.setSectionList(sectionService.getSectionListByArticleIdAndLang(entity.getId(), lang));
+        // category
+        dto.setCategoryList(categoryService.getCategoryListByArticleIdAndLang(entity.getId(), lang));
+        // tag
         return dto;
     }
-
-
-    // 11 section getlast 4 by section id
-    public List<ArticleShortInfoDTO> getLast4BySectionId(Integer sectionId, String articleId) {
-        Pageable pageable = PageRequest.of(0, 4);
-        List<ArticleEntity> list = articleRepository.findLast4BySectionIdExceptId(sectionId, articleId, pageable);
-        return list.stream().map(this::toShortInfoDTO).toList();
-
-    }
-
-    // 12 find top 4 by viewcount
-    public List<ArticleShortInfoDTO> getMosrtRead(){
-        Pageable pageable = PageRequest.of(0, 4);
-        List<ArticleEntity> list=articleRepository.findTop4ByViewCount(pageable);
-        return list.stream().map(this::toShortInfoDTO).toList();
-    }
-
-    //13 increase viewcount
-    public void increaseViewCount(String id){
-        articleRepository.increaseViewCount(id);
-    }
-
-    // 14 increase shared count
-    public void increaseSharedCount(String id){
-        articleRepository.increaseSharedCount(id);
-    }
-
-
-    // 15 filter by publisher
-    public Page<ArticleShortInfoDTO> filterByPublisher(ArticleFilterDTO dto,
-                                                       Integer publisherId,
-                                                       int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        Page<ArticleEntity> articles = articleRepository.filterByPublisher(
-                dto.getTitle(), dto.getRegionId(), dto.getStatus(), publisherId, pageable);
-        return articles.map(this::toShortInfoDTO);
-    }
-
-
-    // 16
-    public Page<ArticleShortInfoDTO> filterByModerator(ArticleFilterDTO dto,
-                                                       Integer moderatorId,
-                                                       int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        Page<ArticleEntity> articles = articleRepository.filterByModerator(
-                dto.getTitle(), dto.getRegionId(), dto.getStatus(), moderatorId, pageable);
-        return articles.map(this::toShortInfoDTO);
-    }
-
-
-
-    public Page<ArticleShortInfoDTO> filterByAdmin(ArticleFilterDTO dto, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        Page<ArticleEntity> articles = articleRepository.filterByAdmin(
-                dto.getTitle(), dto.getRegionId(), dto.getStatus(),
-                dto.getPublisherId(), dto.getModeratorId(), pageable);
-        return articles.map(this::toShortInfoDTO);
-    }
-
-
-
 
     private void toEntity(ArticleCreateDTO dto, ArticleEntity entity) {
         entity.setTitle(dto.getTitle());
