@@ -6,11 +6,10 @@ import dasturlash.uz.dto.auth.RegistrationDTO;
 import dasturlash.uz.dto.auth.VerificationBySmsDTO;
 import dasturlash.uz.dto.profile.ProfileDTO;
 import dasturlash.uz.entity.ProfileEntity;
-import dasturlash.uz.entity.sms.SmsHistoryEntity;
 import dasturlash.uz.enums.ProfileRoleEnum;
 import dasturlash.uz.enums.ProfileStatus;
 import dasturlash.uz.exceptions.AppBadException;
-import dasturlash.uz.repository.ProfileRepository;
+import dasturlash.uz.repository.profile.ProfileRepository;
 import dasturlash.uz.service.email.EmailHistoryService;
 import dasturlash.uz.service.email.EmailSenderService;
 import dasturlash.uz.service.sms.SmsHistoryService;
@@ -22,7 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service

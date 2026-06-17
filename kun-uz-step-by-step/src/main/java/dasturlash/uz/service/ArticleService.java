@@ -10,14 +10,14 @@ import dasturlash.uz.enums.AppLanguageEnum;
 import dasturlash.uz.enums.ArticleStatus;
 import dasturlash.uz.exceptions.AppBadException;
 import dasturlash.uz.mapper.ArticleShortInfo;
-import dasturlash.uz.repository.ArticleCustomRepository;
-import dasturlash.uz.repository.ArticleRepository;
+import dasturlash.uz.repository.article.ArticleCustomRepository;
+import dasturlash.uz.repository.article.ArticleRepository;
 import dasturlash.uz.util.SpringSecurityUtil;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -49,6 +49,7 @@ public class ArticleService {
 
 
     // 1
+    @Transactional
     public ArticleDTO create(ArticleCreateDTO createDTO) {
         ArticleEntity entity = new ArticleEntity();
         toEntity(createDTO, entity);

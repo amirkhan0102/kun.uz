@@ -1,4 +1,4 @@
-package dasturlash.uz.repository;
+package dasturlash.uz.repository.profile;
 
 import dasturlash.uz.entity.ProfileEntity;
 import dasturlash.uz.enums.ProfileStatus;

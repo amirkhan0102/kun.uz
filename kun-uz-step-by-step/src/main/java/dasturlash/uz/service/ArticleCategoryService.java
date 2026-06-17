@@ -2,7 +2,7 @@ package dasturlash.uz.service;
 
 import dasturlash.uz.dto.CategoryDTO;
 import dasturlash.uz.entity.ArticleCategoryEntity;
-import dasturlash.uz.repository.ArticleCategoryRepository;
+import dasturlash.uz.repository.article.ArticleCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

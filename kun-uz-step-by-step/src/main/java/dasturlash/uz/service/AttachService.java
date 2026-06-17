@@ -40,7 +40,6 @@ public class AttachService {
         if (file.isEmpty()) {
             throw new AppBadException("File not found");
         }
-
         try {
             String pathFolder = getYmDString(); // 2025/06/09
             String key = UUID.randomUUID().toString(); // dasdasd-dasdasda-asdasda-asdasd

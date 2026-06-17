@@ -3,6 +3,7 @@ package dasturlash.uz.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
@@ -57,6 +58,8 @@ public class SpringSecurityConfig {
                     .requestMatchers("/api/v1/section/admin", "/api/v1/section/admin/**").hasRole("ADMIN")
                     .requestMatchers("/api/v1/email-history/**").hasRole("ADMIN")
                     .requestMatchers("/api/v1/sms-history/**").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.GET,"/api/v1/tag/list").permitAll()
+                    .requestMatchers("/api/v1/tag/**").hasRole("ADMIN")
                     .anyRequest()
                     .authenticated();
         }).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

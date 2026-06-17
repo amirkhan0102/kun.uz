@@ -2,7 +2,7 @@ package dasturlash.uz.service;
 
 import dasturlash.uz.dto.SectionDTO;
 import dasturlash.uz.entity.ArticleSectionEntity;
-import dasturlash.uz.repository.ArticleSectionRepository;
+import dasturlash.uz.repository.article.ArticleSectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

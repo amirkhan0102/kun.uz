@@ -49,7 +49,7 @@ public class EmailHistoryService {
         // Find entities by toAccount (which is 'email' in the DTO context)
         List<EmailHistoryEntity> entities = emailHistoryRepository.findByToAccount(email);
         // Convert entities to DTOs and return
-        return entities.stream().map(entity -> toDto(entity)).collect(Collectors.toList());
+        return entities.stream().map(this::toDto).collect(Collectors.toList());
     }
 
     public List<EmailHistoryDTO> getEmailHistoryByDate(LocalDate date) {

@@ -1,4 +1,4 @@
-package dasturlash.uz.repository;
+package dasturlash.uz.repository.article;
 
 import dasturlash.uz.entity.ArticleSectionEntity;
 import jakarta.transaction.Transactional;

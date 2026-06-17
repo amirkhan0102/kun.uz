@@ -1,0 +1,31 @@
+### 1. TAG create
+POST localhost:8080/api/v1/tag
+Content-Type: application/json
+Authorization:  Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfQURNSU4iXSwidXNlcm5hbWUiOiJlc2htYXQ1QGdtYWlsLmNvbSIsInN1YiI6ImVzaG1hdDVAZ21haWwuY29tIiwiaWF0IjoxNzgxNzE1OTE0LCJleHAiOjE3ODE4MDIzMTR9.Yki9WM1wAThvWRAuhp8yWa5lbB5qR6JywgXaFgDfrY-YMEILJOXaufo69CgmIPCz5MJnTdMREUamkD8hSDnkFA
+
+{
+  "name": "tashkent"
+}
+
+
+### UPDATE TAG
+PUT http://localhost:8080/api/v1/tag/1
+Content-Type: application/json
+Authorization:  Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfQURNSU4iXSwidXNlcm5hbWUiOiJlc2htYXQ1QGdtYWlsLmNvbSIsInN1YiI6ImVzaG1hdDVAZ21haWwuY29tIiwiaWF0IjoxNzgxNzE1OTE0LCJleHAiOjE3ODE4MDIzMTR9.Yki9WM1wAThvWRAuhp8yWa5lbB5qR6JywgXaFgDfrY-YMEILJOXaufo69CgmIPCz5MJnTdMREUamkD8hSDnkFA
+
+{
+  "name": "uzbekistan"
+}
+
+
+### DELETE TAG
+DELETE http://localhost:8080/api/v1/tag/2
+Content-Type: application/json
+Authorization:  Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfQURNSU4iXSwidXNlcm5hbWUiOiJlc2htYXQ1QGdtYWlsLmNvbSIsInN1YiI6ImVzaG1hdDVAZ21haWwuY29tIiwiaWF0IjoxNzgxNzE1OTE0LCJleHAiOjE3ODE4MDIzMTR9.Yki9WM1wAThvWRAuhp8yWa5lbB5qR6JywgXaFgDfrY-YMEILJOXaufo69CgmIPCz5MJnTdMREUamkD8hSDnkFA
+
+
+### GET ALL LIST
+
+GET localhost:8080/api/v1/tag/list
+
+

@@ -1,4 +1,4 @@
-package dasturlash.uz.repository;
+package dasturlash.uz.repository.article;
 
 import dasturlash.uz.entity.ArticleEntity;
 import dasturlash.uz.enums.ArticleStatus;

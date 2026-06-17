@@ -1,4 +1,4 @@
-package dasturlash.uz.repository;
+package dasturlash.uz.repository.profile;
 
 import dasturlash.uz.dto.FilterResultDTO;
 import dasturlash.uz.dto.profile.ProfileFilterDTO;
