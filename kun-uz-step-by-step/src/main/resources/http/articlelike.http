@@ -1,0 +1,32 @@
+### Like bosish
+POST localhost:8080/api/v1/article-like
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfQURNSU4iXSwidXNlcm5hbWUiOiJlc2htYXQ1QGdtYWlsLmNvbSIsInN1YiI6ImVzaG1hdDVAZ21haWwuY29tIiwiaWF0IjoxNzgxNzY2NzA1LCJleHAiOjE3ODE4NTMxMDV9.rCvgKqb2zguo-H3_wpizEywnkasAlhBy2Jnf8gnxUY1L7hFG_jM56H0NJv9ja5iA8Y-DZkz6cUkrhZqRkYMYlg
+
+{
+  "articleId": "e3274087-597e-4efc-91ab-1ba3582525b4",
+  "status": "LIKE"
+}
+
+
+### Dislike bosish
+POST localhost:8080/api/v1/article-like
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfQURNSU4iXSwidXNlcm5hbWUiOiJlc2htYXQ1QGdtYWlsLmNvbSIsInN1YiI6ImVzaG1hdDVAZ21haWwuY29tIiwiaWF0IjoxNzgxNzY2Mzk4LCJleHAiOjE3ODE4NTI3OTh9.RQhj-KEnT4ochpdWlsq8kbHZzoZkhINj_NM31jtVoA3jX0ZiC3f5Cjw1lwBq9xN4zOGv5Z1BrZ92-2dTej5vNw
+
+{
+  "articleId": "f6c0e205-658c-4077-a6ca-fc2a903d7764",
+  "status": "DISLIKE"
+}
+
+
+
+### Like sonini olish
+GET localhost:8080/api/v1/article-like/like-count/f6c0e205-658c-4077-a6ca-fc2a903d7764
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfQURNSU4iXSwidXNlcm5hbWUiOiJlc2htYXQ1QGdtYWlsLmNvbSIsInN1YiI6ImVzaG1hdDVAZ21haWwuY29tIiwiaWF0IjoxNzgxNzY2Mzk4LCJleHAiOjE3ODE4NTI3OTh9.RQhj-KEnT4ochpdWlsq8kbHZzoZkhINj_NM31jtVoA3jX0ZiC3f5Cjw1lwBq9xN4zOGv5Z1BrZ92-2dTej5vNw
+
+
+### Dislike sonini olish
+GET localhost:8080/api/v1/article-like/dislike-count/f6c0e205-658c-4077-a6ca-fc2a903d7764
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfQURNSU4iXSwidXNlcm5hbWUiOiJlc2htYXQ1QGdtYWlsLmNvbSIsInN1YiI6ImVzaG1hdDVAZ21haWwuY29tIiwiaWF0IjoxNzgxNzY2Mzk4LCJleHAiOjE3ODE4NTI3OTh9.RQhj-KEnT4ochpdWlsq8kbHZzoZkhINj_NM31jtVoA3jX0ZiC3f5Cjw1lwBq9xN4zOGv5Z1BrZ92-2dTej5vNw
+
