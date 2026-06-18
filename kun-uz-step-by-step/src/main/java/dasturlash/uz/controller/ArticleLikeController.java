@@ -16,7 +16,6 @@ public class ArticleLikeController {
     @Autowired
     private ArticleLikeService articleLikeService;
 
-    private SpringSecurityUtil springSecurityUtil = new SpringSecurityUtil();
 
 
     @PostMapping

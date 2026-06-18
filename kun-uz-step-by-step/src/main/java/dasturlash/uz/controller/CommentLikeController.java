@@ -14,12 +14,11 @@ public class CommentLikeController {
     @Autowired
     private CommentLikeService commentLikeService;
 
-   private SpringSecurityUtil securityUtil = new SpringSecurityUtil();
 
 
     @PostMapping
     public ResponseEntity<String> like(@RequestBody CommentLikeDTO dto) {
-        int profileId = securityUtil.currentProfileId();
+        Integer profileId = SpringSecurityUtil.currentProfileId();
         return ResponseEntity.ok(commentLikeService.like(dto, profileId));
     }
 

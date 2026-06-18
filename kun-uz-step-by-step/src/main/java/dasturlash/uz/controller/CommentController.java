@@ -17,7 +17,6 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
-    public static SpringSecurityUtil springSecurityUtil = new SpringSecurityUtil();
 
 
     // CREATE
