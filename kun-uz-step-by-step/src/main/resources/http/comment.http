@@ -1,0 +1,39 @@
+### Comment yaratish
+POST localhost:8080/api/v1/comment
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfQURNSU4iXSwidXNlcm5hbWUiOiJlc2htYXQ1QGdtYWlsLmNvbSIsInN1YiI6ImVzaG1hdDVAZ21haWwuY29tIiwiaWF0IjoxNzgxNzc2NTUzLCJleHAiOjE3ODE4NjI5NTN9._8YNj9Z5XL91UjBHtT9p5DBBEsys3Y_feVByTtR9Bnit18EtJbJ5ZzSokIWnktrpCHqiKORaSMEY8k_FOxieVQ
+
+{
+  "articleId": "f6c0e205-658c-4077-a6ca-fc2a903d7764",
+  "content": "Bu juda yaxshi maqola!",
+  "replyId": null
+}
+
+### Commentga reply
+POST localhost:8080/api/v1/comment
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfQURNSU4iXSwidXNlcm5hbWUiOiJlc2htYXQ1QGdtYWlsLmNvbSIsInN1YiI6ImVzaG1hdDVAZ21haWwuY29tIiwiaWF0IjoxNzgxNzc2NTUzLCJleHAiOjE3ODE4NjI5NTN9._8YNj9Z5XL91UjBHtT9p5DBBEsys3Y_feVByTtR9Bnit18EtJbJ5ZzSokIWnktrpCHqiKORaSMEY8k_FOxieVQ
+
+{
+  "articleId": "f6c0e205-658c-4077-a6ca-fc2a903d7764",
+  "content": "Men ham shunday deb o'ylayman!",
+  "replyId": 1
+}
+
+### Comment update
+PUT localhost:8080/api/v1/comment/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfQURNSU4iXSwidXNlcm5hbWUiOiJlc2htYXQ1QGdtYWlsLmNvbSIsInN1YiI6ImVzaG1hdDVAZ21haWwuY29tIiwiaWF0IjoxNzgxNzc2NTUzLCJleHAiOjE3ODE4NjI5NTN9._8YNj9Z5XL91UjBHtT9p5DBBEsys3Y_feVByTtR9Bnit18EtJbJ5ZzSokIWnktrpCHqiKORaSMEY8k_FOxieVQ
+
+{
+  "articleId": "f6c0e205-658c-4077-a6ca-fc2a903d7764",
+  "content": "Yangilangan comment",
+  "replyId": null
+}
+
+### Comment o'chirish
+DELETE localhost:8080/api/v1/comment/1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfQURNSU4iXSwidXNlcm5hbWUiOiJlc2htYXQ1QGdtYWlsLmNvbSIsInN1YiI6ImVzaG1hdDVAZ21haWwuY29tIiwiaWF0IjoxNzgxNzc2NTUzLCJleHAiOjE3ODE4NjI5NTN9._8YNj9Z5XL91UjBHtT9p5DBBEsys3Y_feVByTtR9Bnit18EtJbJ5ZzSokIWnktrpCHqiKORaSMEY8k_FOxieVQ
+
+### Article bo'yicha commentlar
+GET localhost:8080/api/v1/comment/f6c0e205-658c-4077-a6ca-fc2a903d7764?page=0&size=10

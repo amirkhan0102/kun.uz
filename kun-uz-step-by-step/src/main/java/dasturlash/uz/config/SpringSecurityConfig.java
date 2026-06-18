@@ -60,6 +60,9 @@ public class SpringSecurityConfig {
                     .requestMatchers("/api/v1/sms-history/**").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.GET,"/api/v1/tag/list").permitAll()
                     .requestMatchers("/api/v1/tag/**").hasRole("ADMIN")
+                    .requestMatchers("/api/v1/article-like/**").authenticated()
+                    .requestMatchers(HttpMethod.GET, "/api/v1/comment/**").permitAll()
+                    .requestMatchers("/api/v1/comment/**").authenticated()
                     .anyRequest()
                     .authenticated();
         }).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
