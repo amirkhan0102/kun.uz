@@ -29,3 +29,5 @@ Authorization:  Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfQURNSU4iXSwidXNl
 GET localhost:8080/api/v1/tag/list
 
 
+### Tag bo'yicha maqolalar
+GET localhost:8080/api/v1/article/by-tag/sport?page=0&size=10

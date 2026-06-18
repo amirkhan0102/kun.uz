@@ -1,10 +1,7 @@
 package dasturlash.uz.service;
 
 import dasturlash.uz.dto.FilterResultDTO;
-import dasturlash.uz.dto.article.ArticleAdminFilterDTO;
-import dasturlash.uz.dto.article.ArticleCreateDTO;
-import dasturlash.uz.dto.article.ArticleDTO;
-import dasturlash.uz.dto.article.ArticleFilterDTO;
+import dasturlash.uz.dto.article.*;
 import dasturlash.uz.entity.ArticleEntity;
 import dasturlash.uz.enums.AppLanguageEnum;
 import dasturlash.uz.enums.ArticleStatus;
@@ -18,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -143,6 +141,15 @@ public class ArticleService {
         resultList.forEach(mapper -> responseList.add(toDTO(mapper)));
         return responseList;
     }
+
+
+    // 10
+    public Page<ArticleShortInfoDTO> getByTagName(String tagName, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<ArticleEntity> articles = articleRepository.findByTagName(tagName, pageable);
+        return articles.map(this::toShortInfoDTO);
+    }
+
 
     //   12. Get 4 most read articles, except given article id .
     public List<ArticleDTO> getMostRead4ArticleExceptGivenId(String exceptArticleId) {
@@ -272,5 +279,17 @@ public class ArticleService {
             throw new AppBadException("Article not found");
         });
     }
+
+
+    private ArticleShortInfoDTO toShortInfoDTO(ArticleEntity article) {
+        ArticleShortInfoDTO dto = new ArticleShortInfoDTO();
+        dto.setId(article.getId());
+        dto.setTitle(article.getTitle());
+        dto.setDescription(article.getDescription());
+        dto.setImageId(article.getImageId());
+        dto.setPublishedDate(article.getPublishedDate());
+        return dto;
+    }
+
 
 }

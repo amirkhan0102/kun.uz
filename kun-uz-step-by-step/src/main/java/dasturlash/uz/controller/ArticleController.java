@@ -82,6 +82,17 @@ public class ArticleController {
         return ResponseEntity.ok(articleService.getById(articleId, language));
     }
 
+
+    // 10. GET BY TAG NAME
+    @GetMapping("/by-tag/{tagName}")
+    public ResponseEntity<Page<ArticleShortInfoDTO>> getByTagName(
+            @PathVariable("tagName") String tagName,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        return ResponseEntity.ok(articleService.getByTagName(tagName, page, size));
+    }
+
+
     // 11. Get Last 4 Article By sectionId, except given article id.
     @GetMapping("/section-small/{sectionId}")
     public ResponseEntity<List<ArticleDTO>> last4ArticleBySectionId(@PathVariable("sectionId") Integer sectionId,

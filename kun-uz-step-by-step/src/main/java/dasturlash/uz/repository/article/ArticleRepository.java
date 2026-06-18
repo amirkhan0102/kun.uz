@@ -4,11 +4,15 @@ import dasturlash.uz.entity.ArticleEntity;
 import dasturlash.uz.enums.ArticleStatus;
 import dasturlash.uz.mapper.ArticleShortInfo;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ArticleRepository extends CrudRepository<ArticleEntity, String> {
 
@@ -65,6 +69,21 @@ public interface ArticleRepository extends CrudRepository<ArticleEntity, String>
             " order by a.createdDate desc  limit ?2")
     List<ArticleShortInfo> getLastNByRegionId(Integer regionId, int limit);
 
+
+    // 10
+
+    @Query("SELECT a FROM ArticleEntity a " +
+            "JOIN ArticleTagEntity at ON at.articleId = a.id " +
+            "JOIN TagEntity t ON t.id = at.tagId " +
+            "WHERE t.name = :tagName " +
+            "AND t.visible = true " +
+            "AND a.visible = true " +
+            "AND a.status = 'PUBLISHED' " +
+            "ORDER BY a.publishedDate DESC")
+    Page<ArticleEntity> findByTagName(@Param("tagName") String tagName, Pageable pageable);
+
+
+
     // 12
     @Query(" select a.id as id, a.title as title, a.description as description, a.imageId as imageId, a.publishedDate as publishedDate " +
             " from  ArticleEntity a " +
@@ -88,4 +107,7 @@ public interface ArticleRepository extends CrudRepository<ArticleEntity, String>
     // share count-ni increase qiladi va oxirgi qiymatni return qiladi.
     @Query(value = "UPDATE article SET shared_count = shared_count + 1 WHERE id = ?1 RETURNING shared_count", nativeQuery = true)
     int incrementSharedCountAndGet(String articleId);
+
+
+    Optional<ArticleEntity> findByIdAndVisibleTrue(String id);
 }
