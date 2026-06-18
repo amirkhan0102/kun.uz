@@ -1,0 +1,29 @@
+### Comment like bosish
+POST localhost:8080/api/v1/comment-like
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfQURNSU4iXSwidXNlcm5hbWUiOiJlc2htYXQ1QGdtYWlsLmNvbSIsInN1YiI6ImVzaG1hdDVAZ21haWwuY29tIiwiaWF0IjoxNzgxNzc5NTY1LCJleHAiOjE3ODE4NjU5NjV9.98hhi6xMTG511kIOCko8eFn0X7xCFZ9lyOoj0rQtzo0IDRAuUzlBCKPtxxmvjzkXC2IC9oUpIC-0luAInFVqcQ
+
+{
+  "commentId": 1,
+  "status": "LIKE"
+}
+
+### Comment dislike bosish
+POST localhost:8080/api/v1/comment-like
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfQURNSU4iXSwidXNlcm5hbWUiOiJlc2htYXQ1QGdtYWlsLmNvbSIsInN1YiI6ImVzaG1hdDVAZ21haWwuY29tIiwiaWF0IjoxNzgxNzc5NTY1LCJleHAiOjE3ODE4NjU5NjV9.98hhi6xMTG511kIOCko8eFn0X7xCFZ9lyOoj0rQtzo0IDRAuUzlBCKPtxxmvjzkXC2IC9oUpIC-0luAInFVqcQ
+
+{
+  "commentId": 2,
+  "status": "DISLIKE"
+}
+
+### Comment like sonini olish
+GET localhost:8080/api/v1/comment-like/like-count/1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfQURNSU4iXSwidXNlcm5hbWUiOiJlc2htYXQ1QGdtYWlsLmNvbSIsInN1YiI6ImVzaG1hdDVAZ21haWwuY29tIiwiaWF0IjoxNzgxNzc5NTY1LCJleHAiOjE3ODE4NjU5NjV9.98hhi6xMTG511kIOCko8eFn0X7xCFZ9lyOoj0rQtzo0IDRAuUzlBCKPtxxmvjzkXC2IC9oUpIC-0luAInFVqcQ
+
+
+### Comment dislike sonini olish
+GET localhost:8080/api/v1/comment-like/dislike-count/2
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfQURNSU4iXSwidXNlcm5hbWUiOiJlc2htYXQ1QGdtYWlsLmNvbSIsInN1YiI6ImVzaG1hdDVAZ21haWwuY29tIiwiaWF0IjoxNzgxNzc5NTY1LCJleHAiOjE3ODE4NjU5NjV9.98hhi6xMTG511kIOCko8eFn0X7xCFZ9lyOoj0rQtzo0IDRAuUzlBCKPtxxmvjzkXC2IC9oUpIC-0luAInFVqcQ
+

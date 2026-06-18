@@ -22,7 +22,9 @@ public class ArticleLikeService {
 // statusni tekshirib like dislike qilib ketaveradi
 
     public String like(ArticleLikeDTO dto, Integer profileId) {
-        Optional<ArticleLikeEntity> optinal = articleLikeRepository.findByArticleIdAndProfileId(dto.getArticleId(), profileId);
+        Optional<ArticleLikeEntity> optinal = articleLikeRepository.
+                findByArticleIdAndProfileId(dto.getArticleId(),
+                        profileId);
 
 
         if (optinal.isPresent()) {
